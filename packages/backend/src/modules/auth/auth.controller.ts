@@ -25,7 +25,7 @@ export class AuthController {
   }
 
   @Public()
-    @HttpCode(HttpStatus.OK)
+  @HttpCode(HttpStatus.OK)
   @Post('reg')
   async register(@Body() body: {username: string; pass: string}){
     return this.authService.registration(body.username, body.pass);
@@ -37,18 +37,19 @@ export class AuthController {
     return req.user;
   }
 
-  @Public() //this not must be like this maybe
+  @Public() 
+  @HttpCode(HttpStatus.OK)
   @Post('refresh')
   async refresh(@Body('refreshToken') refreshToken: string) {
     const user = await this.authService.refreshTokens(refreshToken);
     return user;
   }
 
-  @Public() //this not must be like this maybe
+  @Public() 
+  @HttpCode(HttpStatus.OK)
   @Post('logout')
-  async logout(@Req() req: any) {
-    const userId = req.user.sub;
-    await this.authService.logout(userId);
+  async logout(@Body('refreshToken') refreshToken: string) {
+    await this.authService.logout(refreshToken);
     return { message: 'Logout successful' };
-  } //this is writen by gpt but its exept that we work with passport that not true
+  }
 }

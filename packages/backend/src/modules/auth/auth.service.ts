@@ -106,11 +106,17 @@ export class AuthService {
     }
   }
 
-  async logout(userId: number): Promise<void> {
-    await this.usersService.updateUser(userId, {
-      refreshToken: null,
-    });
-}
+  async logout(refreshToken: string): Promise<void> {
+    try{
+      const payload = await this.jwtService.verifyAsync(refreshToken, {
+        secret: this.configService.get('JWT_REFRESH_SECRET'),
+      });
 
-
+      await this.usersService.updateUser(payload.sub, {
+        refreshToken: null,
+      });
+    }catch{
+      throw new ForbiddenException('Invalid or expired refresh token');
+    }
+  }
 }
