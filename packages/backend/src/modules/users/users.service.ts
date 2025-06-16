@@ -31,4 +31,11 @@ export class UsersService {
 
         return newUser;
     }
+
+    public async updateUser(userId: number, data: Partial<{refreshToken: string}>){
+      return this.prismaService.user.update({
+        where: {id: userId},
+        data
+      })
+    }
 }
