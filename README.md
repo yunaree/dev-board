@@ -16,7 +16,7 @@
 - **NestJS** (built on Express)
 - **Prisma ORM** with **PostgreSQL**
 - **MongoDB** for comments
-- **JWT Authentication** with Passport
+- **JWT Authentication** 
 - **REST API** + partial **GraphQL (Apollo)**
 - **File Uploads** (Multer)
 - **Swagger** API documentation
