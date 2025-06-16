@@ -1,5 +1,6 @@
 import {
   ConflictException,
+  ForbiddenException,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -79,4 +80,37 @@ export class AuthService {
       refreshToken: hashedRt,
     });
   }
+
+  async refreshTokens(refreshToken: string): Promise<{ access_token: string; refresh_token: string }> {
+    try {
+      const payload = await this.jwtService.verifyAsync(refreshToken, {
+        secret: this.configService.get('JWT_REFRESH_SECRET'),
+      });
+
+      const user = await this.usersService.findById(payload.sub);
+      if (!user || !user.refreshToken) {
+        throw new ForbiddenException('Access Denied');
+      }
+
+      const isMatch = await bcrypt.compare(refreshToken, user.refreshToken);
+      if (!isMatch) {
+        throw new ForbiddenException('Access Denied');
+      }
+
+      const tokens = await this.generateTokens(user.id, user.username);
+      await this.updateRefreshToken(user.id, tokens.refresh_token);
+
+      return tokens;
+    } catch {
+      throw new ForbiddenException('Invalid or expired refresh token');
+    }
+  }
+
+  async logout(userId: number): Promise<void> {
+    await this.usersService.updateUser(userId, {
+      refreshToken: null,
+    });
+}
+
+
 }

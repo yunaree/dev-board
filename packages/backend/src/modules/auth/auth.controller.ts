@@ -6,7 +6,8 @@ import {
   HttpStatus,
   Post,
   Request,
-  UseGuards
+  UseGuards,
+  Req
 } from '@nestjs/common';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
@@ -35,4 +36,19 @@ export class AuthController {
   getProfile(@Request() req) {
     return req.user;
   }
+
+  @Public() //this not must be like this maybe
+  @Post('refresh')
+  async refresh(@Body('refreshToken') refreshToken: string) {
+    const user = await this.authService.refreshTokens(refreshToken);
+    return user;
+  }
+
+  @Public() //this not must be like this maybe
+  @Post('logout')
+  async logout(@Req() req: any) {
+    const userId = req.user.sub;
+    await this.authService.logout(userId);
+    return { message: 'Logout successful' };
+  } //this is writen by gpt but its exept that we work with passport that not true
 }

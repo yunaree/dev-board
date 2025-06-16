@@ -17,6 +17,10 @@ export class UsersService {
         })
   }
 
+  async findById(id: number) {
+  return this.prismaService.user.findUnique({ where: { id } });
+} 
+
     public async createUser(      
         username: string,
         pass: string,
@@ -32,7 +36,7 @@ export class UsersService {
         return newUser;
     }
 
-    public async updateUser(userId: number, data: Partial<{refreshToken: string}>){
+    public async updateUser(userId: number, data: Partial<{refreshToken: string | null}>){
       return this.prismaService.user.update({
         where: {id: userId},
         data
