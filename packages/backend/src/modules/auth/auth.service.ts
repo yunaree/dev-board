@@ -31,25 +31,25 @@ export class AuthService {
             access_token: await this.jwtService.signAsync(payload),
         }}
 
-  async registration(
-    username: string,
-    pass: string,
-  ): Promise<{ access_token: string }> {
-    const existingUser = await this.usersService.findOne(username);
+    async registration(
+      username: string,
+      pass: string,
+    ): Promise<{ access_token: string }> {
+      const existingUser = await this.usersService.findOne(username);
+      if (existingUser) {
+        throw new ConflictException('Користувач з таким іменем вже існує');
+      }
 
-    if (existingUser) {
-      throw new ConflictException('Користувач з таким іменем вже існує');
+      const hash = await bcrypt.hash(pass, 10);
+
+      const newUser = await this.usersService.createUser(username, hash);
+
+      const payload = { username: newUser.username, sub: newUser.userId };
+      const token = await this.jwtService.signAsync(payload);
+
+      return {
+        access_token: token,
+      };
     }
 
-    const hash = await bcrypt.hash(pass, 10);
-
-    const newUser = await this.usersService.createUser(username, hash);
-
-    const payload = { username: newUser.username, sub: newUser.userId };
-    const token = await this.jwtService.signAsync(payload);
-
-    return {
-      access_token: token,
-    };
-  }
 }
