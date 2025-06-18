@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from '../../shared/guards/auth.guard';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '../jwt/jwt.service';
 
