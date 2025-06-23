@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Patch, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { Task } from 'src/shared/types/task.type';
 import { TaskDto } from 'src/shared/dtos/task.dto';
@@ -38,7 +38,7 @@ export class TasksController {
     }
 
     @UseGuards(AuthGuard)
-    @Put('change-status')
+    @Patch('change-status')
     async changeStatus(@Body() body: { taskId: number, status: string }, @Req() req: RequestWithUser): Promise<Task>{
         const userId = req.user['sub'];
         const taskId = body.taskId;
