@@ -2,6 +2,7 @@ import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/commo
 import { Status } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
 import { Task } from 'src/shared/types/task.type';
+import { isValidStatus } from 'src/shared/utils/status.util';
 
 @Injectable()
 export class TasksService {
@@ -38,5 +39,38 @@ export class TasksService {
         });
 
         return { success: true };
+    }
+
+    async getMyTasks(userId: number):Promise<{active: Task[], in_progress: Task[], inactive: Task[]}>{
+        const tasks = await this.prismaService.task.findMany({
+            where: {
+            createdBy: userId,
+            },
+            orderBy: {
+            createdAt: 'asc',
+            },
+        });
+
+        return {
+            active: tasks.filter(task => task.status === Status.active),
+            in_progress: tasks.filter(task => task.status === Status.in_progress),
+            inactive: tasks.filter(task => task.status === Status.inactive),
+        };
+    }
+
+    async changeStatus(userId: number, taskId: number, status: string){
+        if(!isValidStatus(status)){
+            throw new ForbiddenException('Такого статусу не існує')
+        }
+
+        return this.prismaService.task.update({
+            where: {
+                id: taskId,
+                createdBy: userId
+            },
+            data: {
+                status: status
+            }
+        })
     }
 }
