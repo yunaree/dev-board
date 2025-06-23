@@ -6,6 +6,7 @@ import { UsersModule } from './modules/users/users.module';
 import { PrismaModule } from 'nestjs-prisma';
 import { JwtModule } from './modules/jwt/jwt.module';
 import { TasksModule } from './modules/tasks/tasks.module';
+import { DashboardsModule } from './modules/dashboards/dashboards.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { TasksModule } from './modules/tasks/tasks.module';
     }),
     JwtModule,
     TasksModule,
+    DashboardsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

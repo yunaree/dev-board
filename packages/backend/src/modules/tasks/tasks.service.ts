@@ -8,13 +8,14 @@ import { isValidStatus } from 'src/shared/utils/status.util';
 export class TasksService {
     constructor(private prismaService: PrismaService){}
 
-    async createTask(title: string, description: string | null, status: Status, createdBy: number):Promise<Task | null>{
+    async createTask(title: string, description: string | null, status: Status, dashboardId: number | undefined, createdBy: number):Promise<Task | null>{
         return this.prismaService.task.create({
             data: {
                 title: title,
                 description: description,
                 status: status,
-                createdBy: createdBy
+                createdBy: createdBy,
+                ...(dashboardId !== undefined && { dashboardId })
             }
         })
     }
@@ -41,10 +42,14 @@ export class TasksService {
         return { success: true };
     }
 
-    async getMyTasks(userId: number):Promise<{active: Task[], in_progress: Task[], inactive: Task[]}>{
+    async getMyTasks(
+        userId: number,
+        dashboardId: number
+    ):Promise<{active: Task[], in_progress: Task[], inactive: Task[]}>{
         const tasks = await this.prismaService.task.findMany({
             where: {
             createdBy: userId,
+            ...(dashboardId !== undefined && { dashboardId })
             },
             orderBy: {
             createdAt: 'asc',

@@ -1,5 +1,5 @@
 import { Status } from '@prisma/client';
-import { IsString, MinLength } from 'class-validator';
+import { IsInt, IsString, MinLength } from 'class-validator';
 
 export class TaskDto{
     @IsString()
@@ -9,4 +9,7 @@ export class TaskDto{
     description: string | null;
 
     status: Status;
+
+    @IsInt()
+    dashboardId?: number;
 }

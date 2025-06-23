@@ -16,7 +16,7 @@ export class TasksController {
         @Req() req: RequestWithUser,
     ): Promise<Task|null>{
         const userId = req.user['sub'];
-        return this.tasksService.createTask(taskDto.title, taskDto.description, taskDto.status, userId);
+        return this.tasksService.createTask(taskDto.title, taskDto.description, taskDto.status, taskDto.dashboardId, userId);
     }
 
     @UseGuards(AuthGuard)
@@ -32,9 +32,15 @@ export class TasksController {
   
     @UseGuards(AuthGuard)
     @Get('my-tasks')
-    async getMyTasks(@Req() req: RequestWithUser): Promise<{active: Task[], in_progress: Task[], inactive: Task[]}>{
+    async getMyTasks(
+        @Body() body: {
+            dashboardId: number
+        },
+        @Req() req: RequestWithUser
+    ): Promise<{active: Task[], in_progress: Task[], inactive: Task[]}>{
         const userId = req.user['sub'];
-        return this.tasksService.getMyTasks(userId);
+        const dashboardId = body.dashboardId;
+        return this.tasksService.getMyTasks(userId, dashboardId);
     }
 
     @UseGuards(AuthGuard)
