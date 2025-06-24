@@ -64,19 +64,19 @@ describe('AuthService', () => {
 
   describe('signIn', () => {
     it('should throw UnauthorizedException if user not found', async () => {
-      jest.spyOn(usersService, 'findOne').mockResolvedValue(undefined);
+      jest.spyOn(usersService, 'findOne').mockResolvedValue(null);
       await expect(service.signIn('testuser', 'password')).rejects.toThrow('Користувача не знайдено');
     });
 
     it('should throw UnauthorizedException if password does not match', async () => {
-      const mockUser = { id: 1, username: 'testuser', password: 'hashedPassword' };
+      const mockUser = { id: 1, username: 'testuser', password: 'hashedPassword', refreshToken: null };
       jest.spyOn(usersService, 'findOne').mockResolvedValue(mockUser);
       (bcrypt.compare as jest.Mock).mockResolvedValue(false);
       await expect(service.signIn('testuser', 'wrongpassword')).rejects.toThrow('Невірний пароль');
     });
 
     it('should return tokens if sign in is successful', async () => {
-      const mockUser = { id: 1, username: 'testuser', password: 'hashedPassword' };
+      const mockUser = { id: 1, username: 'testuser', password: 'hashedPassword', refreshToken: null };
       jest.spyOn(usersService, 'findOne').mockResolvedValue(mockUser);
       (bcrypt.compare as jest.Mock).mockResolvedValue(true);
       const result = await service.signIn('testuser', 'password');
@@ -86,14 +86,14 @@ describe('AuthService', () => {
 
   describe('registration', () => {
     it('should throw ConflictException if user already exists', async () => {
-      jest.spyOn(usersService, 'findOne').mockResolvedValue({ id: 1, username: 'existinguser' });
+      jest.spyOn(usersService, 'findOne').mockResolvedValue({ id: 1, username: 'existinguser', password: '', refreshToken: null });
       await expect(service.registration('existinguser', 'password')).rejects.toThrow('Користувач з таким іменем вже існує');
     });
 
     it('should create a new user and return tokens', async () => {
-      jest.spyOn(usersService, 'findOne').mockResolvedValue(undefined);
+      jest.spyOn(usersService, 'findOne').mockResolvedValue(null);
       (bcrypt.hash as jest.Mock).mockResolvedValue('hashedPassword');
-      jest.spyOn(usersService, 'createUser').mockResolvedValue({ id: 1, username: 'newuser', password: 'hashedPassword' });
+      jest.spyOn(usersService, 'createUser').mockResolvedValue({ id: 1, username: 'newuser', password: 'hashedPassword', refreshToken: null });
       const result = await service.registration('newuser', 'password');
       expect(result).toEqual({ access_token: 'token', refresh_token: 'refresh' });
     });

@@ -13,9 +13,57 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
-  id  Int @id @default(autoincrement())
-  username String @unique @db.VarChar(50)
-  password String @db.VarChar(255)
+model User {
+  id           Int     @id @default(autoincrement())
+  username     String  @unique @db.VarChar(50)
+  password     String  @db.VarChar(255)
   refreshToken String? @db.VarChar(500)
+
+  tasks        Task[]  @relation("UserTasks")
+  dashboards  Dashboard[] @relation("CreatedDashboards")
+  dashboardMemberships  DashboardMember[]
 }
+
+enum Status {
+  active
+  in_progress
+  inactive
+}
+
+model Task {
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(500)
+  description String?  @db.VarChar(500)
+  status      Status
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdBy   Int?  
+  dashboardId Int?
+
+  user        User?    @relation("UserTasks", fields: [createdBy], references: [id])
+  dashboard Dashboard? @relation(fields: [dashboardId], references: [id])
+
+}
+
+model Dashboard {
+  id       Int     @id @default(autoincrement())
+  title    String  @db.VarChar(255)
+  userId   Int
+
+  creator  User    @relation("CreatedDashboards", fields: [userId], references: [id])
+  tasks    Task[]
+  members  DashboardMember[]
+}
+
+model DashboardMember {
+  id           Int       @id @default(autoincrement())
+  userId       Int
+  dashboardId  Int
+
+  user         User      @relation(fields: [userId], references: [id])
+  dashboard    Dashboard @relation(fields: [dashboardId], references: [id])
+
+  @@unique([userId, dashboardId]) // один користувач не може бути двічі в одній дошці
+}
+
+
