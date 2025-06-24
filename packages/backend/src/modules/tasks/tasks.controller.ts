@@ -16,7 +16,7 @@ export class TasksController {
         @Req() req: RequestWithUser,
     ): Promise<Task|null>{
         const userId = req.user['sub'];
-        return this.tasksService.createTask(taskDto.title, taskDto.description, taskDto.status, taskDto.dashboardId, userId);
+        return this.tasksService.createTask(taskDto.title, taskDto.description, taskDto.status, userId);
     }
 
     @UseGuards(AuthGuard)

@@ -50,4 +50,60 @@ export class DashboardsController {
         const newTitle = body.newTitle;
         return this.dashboardsService.renameDashboard(dashboardId, newTitle, userId);
     }
+
+    @UseGuards(AuthGuard)
+    @Post('add-task-to-dashboard')
+    async addTaskToDashboard(
+        @Body() body: { taskId: number, dashboardId: number },  
+        @Req() req: RequestWithUser
+    ): Promise<{ success: boolean }> {
+        const userId = req.user['sub'];
+        const taskId = body.taskId;
+        const dashboardId = body.dashboardId;
+        return this.dashboardsService.addTaskToDashboard(taskId, dashboardId, userId);
+    }
+
+    @UseGuards(AuthGuard)
+    @Post('add-user-to-dashboard')
+    async addUserToDashboard(
+        @Body() body: { dashboardId: number, username: string },
+        @Req() req: RequestWithUser
+    ): Promise<{ success: boolean }> { 
+        const userId = req.user['sub'];
+        const dashboardId = body.dashboardId;
+        const username = body.username;
+        return this.dashboardsService.addUserToDashboard(dashboardId, username, userId);
+    }
+
+    @UseGuards(AuthGuard)
+    @Post('remove-user-from-dashboard')
+    async removeUserFromDashboard(
+        @Body() body: { dashboardId: number, username: string },
+        @Req() req: RequestWithUser
+    ): Promise<{ success: boolean }> {
+        const userId = req.user['sub'];
+        const dashboardId = body.dashboardId;
+        const username = body.username;
+        return this.dashboardsService.removeUserFromDashboard(dashboardId, username, userId);
+    }
+
+    @UseGuards(AuthGuard)
+    @Post('leave-dashboard')
+    async leaveDashboard(
+        @Body() body: { dashboardId: number },
+        @Req() req: RequestWithUser
+    ): Promise<{ success: boolean }> {
+        const userId = req.user['sub'];
+        const dashboardId = body.dashboardId;
+        return this.dashboardsService.leaveDashboard(dashboardId, userId);
+    }
+
+    @UseGuards(AuthGuard)
+    @Get('get-dashboard-users')
+    async getDashboardUsers(
+        @Body() body: { dashboardId: number }
+    ): Promise<{ users: { id: number, username: string }[] }> {
+        const dashboardId = body.dashboardId;
+        return this.dashboardsService.getDashboardUsers(dashboardId);
+    }
 }

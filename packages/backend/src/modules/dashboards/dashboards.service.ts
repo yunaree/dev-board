@@ -67,4 +67,160 @@ export class DashboardsService {
             data: { title: newTitle },
         });
     }   
+
+    async addTaskToDashboard(taskId: number, dashboardId: number, userId: number): Promise<{ success: boolean }> {
+        const task = await this.prismaService.task.findUnique({
+            where: { id: taskId },
+        });
+
+        if (!task) {
+            throw new Error('Task not found');
+        }
+
+        if (task.createdBy !== userId) {
+            throw new Error('You can only add your own tasks to dashboards');
+        }
+
+        const dashboard = await this.prismaService.dashboard.findUnique({
+            where: { id: dashboardId },
+        });
+
+        if (!dashboard) {
+            throw new Error('Dashboard not found');
+        }
+
+        await this.prismaService.task.update({
+            where: { id: taskId },
+            data: { dashboardId },
+        });
+
+        return { success: true };
+    }
+
+    async addUserToDashboard(dashboardId: number, username: string, userId: number): Promise<{ success: boolean }> {
+        const dashboard = await this.prismaService.dashboard.findUnique({
+            where: { id: dashboardId },
+        });
+
+        if (!dashboard) {
+            throw new Error('Dashboard not found');
+        }
+
+        if (dashboard.userId !== userId) {
+            throw new Error('You can only add users to your own dashboards');
+        }
+
+        console.log('Adding user to dashboard:', { dashboardId, username, userId });
+
+        const user = await this.prismaService.user.findUnique({
+            where: { username },
+        });
+
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        await this.prismaService.dashboardMember.create({
+            data: {
+                dashboardId,
+                userId: user.id,
+            },
+        });
+
+        return { success: true };
+    }
+
+    async removeUserFromDashboard(dashboardId: number, username: string, userId: number): Promise<{ success: boolean }> {
+        const dashboard = await this.prismaService.dashboard.findUnique({
+            where: { id: dashboardId },
+        });
+
+        if (!dashboard) {
+            throw new Error('Dashboard not found');
+        }
+
+        if (dashboard.userId !== userId) {
+            throw new Error('You can only remove users from your own dashboards');
+        }
+
+        const user = await this.prismaService.user.findUnique({
+            where: { username },
+        });
+
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        await this.prismaService.dashboardMember.delete({
+            where: {
+            userId_dashboardId: {
+                userId: user.id,
+                dashboardId: dashboardId,
+            },
+            },
+        });
+
+        return { success: true };
+    }
+
+
+        async leaveDashboard(dashboardId: number, userId: number): Promise<{ success: boolean }> {
+            const dashboard = await this.prismaService.dashboard.findUnique({
+                where: { id: dashboardId },
+            });
+
+            if (!dashboard) {
+                throw new Error('Dashboard not found');
+            }
+
+            if (dashboard.userId === userId) {
+                throw new Error('You cannot leave your own dashboard');
+            }
+
+            await this.prismaService.dashboardMember.delete({
+                where: {
+                userId_dashboardId: {
+                    userId,
+                    dashboardId,
+                },
+                },
+            });
+
+            return { success: true };
+        }
+
+
+    async getDashboardUsers(dashboardId: number): Promise<{ users: { id: number, username: string }[] }> {
+        const dashboard = await this.prismaService.dashboard.findUnique({
+            where: { id: dashboardId },
+            include: { members: true },
+        });
+
+        if (!dashboard) {
+            throw new Error('Dashboard not found');
+        }
+
+        const usersId = dashboard.members.map(user => ({
+            id: user.id
+        }));
+
+        const usernames = await this.prismaService.user.findMany({
+            where: {
+                id: {
+                    in: usersId.map(user => user.id),
+                },
+            },
+            select: {
+                id: true,
+                username: true,
+            },
+        });
+
+        const users = usernames.map(user => ({
+            id: user.id,
+            username: user.username,
+        }));
+
+        return { users };
+    }
 }

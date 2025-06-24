@@ -8,14 +8,14 @@ import { isValidStatus } from 'src/shared/utils/status.util';
 export class TasksService {
     constructor(private prismaService: PrismaService){}
 
-    async createTask(title: string, description: string | null, status: Status, dashboardId: number | undefined, createdBy: number):Promise<Task | null>{
+    async createTask(title: string, description: string | null, status: Status, createdBy: number):Promise<Task | null>{
         return this.prismaService.task.create({
             data: {
                 title: title,
                 description: description,
                 status: status,
                 createdBy: createdBy,
-                ...(dashboardId !== undefined && { dashboardId })
+                // ...(dashboardId !== undefined && { dashboardId })
             }
         })
     }
