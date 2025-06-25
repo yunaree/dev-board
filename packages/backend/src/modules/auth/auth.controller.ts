@@ -12,11 +12,16 @@ import {
 import { AuthGuard } from '../../shared/guards/auth.guard';
 import { AuthService } from './auth.service';
 import { Public } from './public.decorator';
+import { ApiTags, ApiOperation, ApiBody, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
+  @ApiOperation({ summary: 'User login' })
+  @ApiBody({ schema: { properties: { username: { type: 'string' }, pass: { type: 'string' } } } })
+  @ApiResponse({ status: 200, description: 'Login successful', schema: { example: { access_token: '...', refresh_token: '...' } } })
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('login')
@@ -24,20 +29,29 @@ export class AuthController {
     return this.authService.signIn(signInDto.username, signInDto.pass);
   }
 
+  @ApiOperation({ summary: 'User registration' })
+  @ApiBody({ schema: { properties: { username: { type: 'string' }, pass: { type: 'string' } } } })
+  @ApiResponse({ status: 201, description: 'User registered', schema: { example: { access_token: '...', refresh_token: '...' } } })
   @Public()
   @HttpCode(HttpStatus.OK)
-  @Post('reg')
-  async register(@Body() body: {username: string; pass: string}){
+  @Post('register')
+  async register(@Body() body: { username: string; pass: string }) {
     return this.authService.registration(body.username, body.pass);
   }
 
+  @ApiOperation({ summary: 'Get current user profile' })
+  @ApiBearerAuth()
+  @ApiResponse({ status: 200, description: 'Current user', schema: { example: { id: 1, username: 'user' } } })
   @UseGuards(AuthGuard)
-  @Get('profile')
+  @Get('me')
   getProfile(@Request() req) {
     return req.user;
   }
 
-  @Public() 
+  @ApiOperation({ summary: 'Refresh tokens' })
+  @ApiBody({ schema: { properties: { refreshToken: { type: 'string' } } } })
+  @ApiResponse({ status: 200, description: 'Tokens refreshed', schema: { example: { access_token: '...', refresh_token: '...' } } })
+  @Public()
   @HttpCode(HttpStatus.OK)
   @Post('refresh')
   async refresh(@Body('refreshToken') refreshToken: string) {
@@ -45,7 +59,10 @@ export class AuthController {
     return user;
   }
 
-  @Public() 
+  @ApiOperation({ summary: 'Logout user' })
+  @ApiBody({ schema: { properties: { refreshToken: { type: 'string' } } } })
+  @ApiResponse({ status: 200, description: 'Logout successful', schema: { example: { message: 'Logout successful' } } })
+  @Public()
   @HttpCode(HttpStatus.OK)
   @Post('logout')
   async logout(@Body('refreshToken') refreshToken: string) {
