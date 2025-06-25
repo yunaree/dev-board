@@ -1,25 +1,33 @@
-import { Body, Controller, Delete, Get, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { DashboardsService } from './dashboards.service';
 import { AuthGuard } from 'src/shared/guards/auth.guard';
 import { Dashboard } from 'src/shared/types/dashboard.type';
 import { RequestWithUser } from 'src/shared/interfaces/request-with-user.type';
 import { DashboardDto } from 'src/shared/dtos/dashboard.dto';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Dashboards')
+@ApiBearerAuth()
 @Controller('dashboards')
 export class DashboardsController {
-    constructor(private readonly dashboardsService: DashboardsService) {}
+    constructor(private readonly dashboardsService: DashboardsService) { }
 
+    @ApiOperation({ summary: 'Get all dashboards for current user' })
+    @ApiResponse({ status: 200, description: 'List of dashboards', type: [DashboardDto] })
     @UseGuards(AuthGuard)
-    @Get('get-dashboards')
+    @Get()
     async getDashboards(
         @Req() req: RequestWithUser
-    ): Promise<Dashboard[]>{
+    ): Promise<Dashboard[]> {
         const userId = req.user['sub'];
         return this.dashboardsService.getDashboards(userId);
     }
 
+    @ApiOperation({ summary: 'Create new dashboard' })
+    @ApiBody({ type: DashboardDto })
+    @ApiResponse({ status: 201, description: 'Dashboard created', type: DashboardDto })
     @UseGuards(AuthGuard)
-    @Post('create-dashboard')
+    @Post()
     async createDashboard(
         @Req() req: RequestWithUser,
         @Body() dashboardDto: DashboardDto
@@ -28,82 +36,104 @@ export class DashboardsController {
         return this.dashboardsService.createDashboard(dashboardDto.title, userId);
     }
 
+    @ApiOperation({ summary: 'Delete dashboard by id' })
+    @ApiParam({ name: 'id', type: Number })
+    @ApiResponse({ status: 200, description: 'Dashboard deleted' })
     @UseGuards(AuthGuard)
-    @Delete('remove-dashboard')
+    @Delete(':id')
     async removeDashboard(
-        @Body() body: { dashboardId: number },
+        @Param('id') dashboardId: number,
         @Req() req: RequestWithUser
     ): Promise<{ success: boolean }> {
         const userId = req.user['sub'];
-        const dashboardId = body.dashboardId;
         return this.dashboardsService.removeDashboard(dashboardId, userId);
     }
 
+    @ApiOperation({ summary: 'Rename dashboard' })
+    @ApiParam({ name: 'id', type: Number })
+    @ApiBody({ schema: { properties: { newTitle: { type: 'string' } } } })
+    @ApiResponse({ status: 200, description: 'Dashboard renamed', type: DashboardDto })
     @UseGuards(AuthGuard)
-    @Patch('rename-dashboard')
+    @Patch(':id')
     async renameDashboard(
-        @Body() body: { dashboardId: number, newTitle: string },
+        @Param('id') dashboardId: number,
+        @Body() body: { newTitle: string },
         @Req() req: RequestWithUser
     ): Promise<Dashboard> {
         const userId = req.user['sub'];
-        const dashboardId = body.dashboardId;
         const newTitle = body.newTitle;
         return this.dashboardsService.renameDashboard(dashboardId, newTitle, userId);
     }
 
+    @ApiOperation({ summary: 'Add task to dashboard' })
+    @ApiParam({ name: 'id', type: Number })
+    @ApiBody({ schema: { properties: { taskId: { type: 'number' } } } })
+    @ApiResponse({ status: 200, description: 'Task added to dashboard' })
     @UseGuards(AuthGuard)
-    @Post('add-task-to-dashboard')
+    @Post(':id/tasks')
     async addTaskToDashboard(
-        @Body() body: { taskId: number, dashboardId: number },  
+        @Param('id') dashboardId: number,
+        @Body() body: { taskId: number },
         @Req() req: RequestWithUser
     ): Promise<{ success: boolean }> {
         const userId = req.user['sub'];
         const taskId = body.taskId;
-        const dashboardId = body.dashboardId;
         return this.dashboardsService.addTaskToDashboard(taskId, dashboardId, userId);
     }
 
+    @ApiOperation({ summary: 'Add user to dashboard' })
+    @ApiParam({ name: 'id', type: Number })
+    @ApiBody({ schema: { properties: { username: { type: 'string' } } } })
+    @ApiResponse({ status: 200, description: 'User added to dashboard' })
     @UseGuards(AuthGuard)
-    @Post('add-user-to-dashboard')
+    @Post(':id/users')
     async addUserToDashboard(
-        @Body() body: { dashboardId: number, username: string },
+        @Param('id') dashboardId: number,
+        @Body() body: { username: string },
         @Req() req: RequestWithUser
-    ): Promise<{ success: boolean }> { 
+    ): Promise<{ success: boolean }> {
         const userId = req.user['sub'];
-        const dashboardId = body.dashboardId;
         const username = body.username;
         return this.dashboardsService.addUserToDashboard(dashboardId, username, userId);
     }
 
+    @ApiOperation({ summary: 'Remove user from dashboard' })
+    @ApiParam({ name: 'id', type: Number })
+    @ApiBody({ schema: { properties: { username: { type: 'string' } } } })
+    @ApiResponse({ status: 200, description: 'User removed from dashboard' })
     @UseGuards(AuthGuard)
-    @Post('remove-user-from-dashboard')
+    @Delete(':id/users')
     async removeUserFromDashboard(
-        @Body() body: { dashboardId: number, username: string },
+        @Param('id') dashboardId: number,
+        @Body() body: { username: string },
         @Req() req: RequestWithUser
     ): Promise<{ success: boolean }> {
         const userId = req.user['sub'];
-        const dashboardId = body.dashboardId;
         const username = body.username;
         return this.dashboardsService.removeUserFromDashboard(dashboardId, username, userId);
     }
 
+    @ApiOperation({ summary: 'Leave dashboard' })
+    @ApiParam({ name: 'id', type: Number })
+    @ApiResponse({ status: 200, description: 'Left dashboard' })
     @UseGuards(AuthGuard)
-    @Post('leave-dashboard')
+    @Post(':id/leave')
     async leaveDashboard(
-        @Body() body: { dashboardId: number },
+        @Param('id') dashboardId: number,
         @Req() req: RequestWithUser
     ): Promise<{ success: boolean }> {
         const userId = req.user['sub'];
-        const dashboardId = body.dashboardId;
         return this.dashboardsService.leaveDashboard(dashboardId, userId);
     }
 
+    @ApiOperation({ summary: 'Get users of dashboard' })
+    @ApiParam({ name: 'id', type: Number })
+    @ApiResponse({ status: 200, description: 'List of users', schema: { example: { users: [{ id: 1, username: 'user' }] } } })
     @UseGuards(AuthGuard)
-    @Get('get-dashboard-users')
+    @Get(':id/users')
     async getDashboardUsers(
-        @Body() body: { dashboardId: number }
+        @Param('id') dashboardId: number
     ): Promise<{ users: { id: number, username: string }[] }> {
-        const dashboardId = body.dashboardId;
         return this.dashboardsService.getDashboardUsers(dashboardId);
     }
 }
