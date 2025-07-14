@@ -9,14 +9,15 @@ import {
   UseGuards,
   Req
 } from '@nestjs/common';
-import { AuthGuard} from '@nestjs/passport';
+import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { Public } from './public.decorator';
 import { ApiTags, ApiOperation, ApiBody, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthLoginDto } from 'src/shared/dtos/auth-login.dto';
 import { AuthRefreshDto } from 'src/shared/dtos/auth-refresh.dto';
 import { GithubAuthGuard } from 'src/shared/guards/github/github.guard';
-import { JwtAuthGuard } from 'src/shared/guards/auth.guard';
+import { JwtAuthGuard } from 'src/shared/guards/auth/auth.guard';
+import { GoogleGuard } from 'src/shared/guards/google/google.guard';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -86,6 +87,21 @@ export class AuthController {
   @UseGuards(GithubAuthGuard)
   async githubCallback(@Request() req) {
     // req.user contains the tokens from the GithubStrategy.validate()
+    return req.user;
+  }
+
+    @Public()
+  @Get('google')
+  @UseGuards(GoogleGuard)
+  async googleLogin() {
+    // Redirects to Google by Passport
+  }
+
+  @Public()
+  @Get('google/callback')
+  @UseGuards(GoogleGuard)
+  async googleCallback(@Request() req) {
+    // req.user contains the tokens from the GoogleStrategy.validate()
     return req.user;
   }
 }

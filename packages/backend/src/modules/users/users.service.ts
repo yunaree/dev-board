@@ -38,7 +38,7 @@ export class UsersService {
 
     const newUser = await this.prismaService.user.create({
       data: {
-        username: profile.username || profile.displayName,
+        username: profile.username || profile.emails?.[0]?.value || profile.id,
         email: profile.emails?.[0]?.value,
         provider,
         providerId: profile.id,

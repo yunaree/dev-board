@@ -5,11 +5,13 @@ import { UsersModule } from '../users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
 import { jwtConstants } from './constants';
-import { JwtAuthGuard  } from '../../shared/guards/auth.guard';
+import { JwtAuthGuard } from '../../shared/guards/auth/auth.guard';
 import { ConfigService } from '@nestjs/config';
 import { GithubStrategy } from './strategy/github.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { GithubAuthGuard } from 'src/shared/guards/github/github.guard';
+import { GoogleStrategy } from './strategy/google.strategy';
+import { GoogleGuard } from 'src/shared/guards/google/google.guard';
 
 @Module({
   imports: [
@@ -30,6 +32,8 @@ import { GithubAuthGuard } from 'src/shared/guards/github/github.guard';
     ConfigService,
     GithubStrategy,
     GithubAuthGuard,
+    GoogleStrategy,
+    GoogleGuard
   ],
   exports: [AuthService],
   controllers: [AuthController],
