@@ -5,7 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
@@ -14,14 +15,20 @@ datasource db {
 }
 
 model User {
-  id           Int     @id @default(autoincrement())
-  username     String  @unique @db.VarChar(50)
-  password     String  @db.VarChar(255)
-  refreshToken String? @db.VarChar(500)
-
-  tasks        Task[]  @relation("UserTasks")
-  dashboards  Dashboard[] @relation("CreatedDashboards")
+  id            Int      @id @default(autoincrement())
+  username      String   @unique
+  password      String?
+  email         String?  @unique
+  provider      String   @default("local")
+  providerId    String?  @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  tasks         Task[]  @relation("UserTasks")
+  dashboards    Dashboard[] @relation("CreatedDashboards")
   dashboardMemberships  DashboardMember[]
+  refreshToken  String?
+  
+  @@unique([provider, providerId])
 }
 
 enum Status {

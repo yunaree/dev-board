@@ -6,6 +6,11 @@ export type UserPayload = {
 export interface User {
   id: number;
   username: string;
-  password: string;
-  refreshToken: string | null;
+  password:string | null; 
+  email:string | null; 
+  provider:string;
+  providerId:string | null; 
+  createdAt: Date;
+  updatedAt: Date;
+  refreshToken:  string | null; 
 }

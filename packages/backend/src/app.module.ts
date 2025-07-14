@@ -7,9 +7,11 @@ import { PrismaModule } from 'nestjs-prisma';
 import { JwtModule } from './modules/jwt/jwt.module';
 import { TasksModule } from './modules/tasks/tasks.module';
 import { DashboardsModule } from './modules/dashboards/dashboards.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     AuthModule,
     UsersModule,
     PrismaModule.forRoot({
@@ -22,4 +24,4 @@ import { DashboardsModule } from './modules/dashboards/dashboards.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

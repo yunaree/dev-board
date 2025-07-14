@@ -2,9 +2,10 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, Req, Use
 import { TasksService } from './tasks.service';
 import { Task } from 'src/shared/types/task.type';
 import { TaskDto } from 'src/shared/dtos/task.dto';
-import { AuthGuard } from 'src/shared/guards/auth.guard';
+import { JwtAuthGuard  } from 'src/shared/guards/auth.guard';
 import { RequestWithUser } from 'src/shared/interfaces/request-with-user.type';
 import { ApiTags, ApiOperation, ApiBody, ApiResponse, ApiParam, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
+import { ChangeTaskStatusDto } from 'src/shared/dtos/change-task-status.dto';
 
 @ApiTags('Tasks')
 @ApiBearerAuth()
@@ -15,7 +16,7 @@ export class TasksController {
     @ApiOperation({ summary: 'Create new task' })
     @ApiBody({ type: TaskDto })
     @ApiResponse({ status: 201, description: 'Task created', type: TaskDto })
-    @UseGuards(AuthGuard)
+    @UseGuards(JwtAuthGuard )
     @Post()
     async createTask(
         @Body() taskDto: TaskDto,
@@ -28,7 +29,7 @@ export class TasksController {
     @ApiOperation({ summary: 'Delete task by id' })
     @ApiParam({ name: 'id', type: Number })
     @ApiResponse({ status: 200, description: 'Task deleted', schema: { example: { success: true } } })
-    @UseGuards(AuthGuard)
+    @UseGuards(JwtAuthGuard )
     @Delete(':id')
     async removeTask(
         @Param('id') id: number,
@@ -41,7 +42,7 @@ export class TasksController {
     @ApiOperation({ summary: 'Get tasks for current user and dashboard' })
     @ApiQuery({ name: 'dashboardId', type: Number })
     @ApiResponse({ status: 200, description: 'Tasks grouped by status', schema: { example: { active: [], in_progress: [], inactive: [] } } })
-    @UseGuards(AuthGuard)
+    @UseGuards(JwtAuthGuard )
     @Get()
     async getMyTasks(
         @Query('dashboardId') dashboardId: number,
@@ -53,11 +54,11 @@ export class TasksController {
 
     @ApiOperation({ summary: 'Change task status' })
     @ApiParam({ name: 'id', type: Number })
-    @ApiBody({ schema: { properties: { status: { type: 'string' } } } })
+    @ApiBody({ type: ChangeTaskStatusDto })
     @ApiResponse({ status: 200, description: 'Task status changed', type: TaskDto })
-    @UseGuards(AuthGuard)
+    @UseGuards(JwtAuthGuard )
     @Patch(':id/status')
-    async changeStatus(@Param('id') id: number, @Body() body: { status: string }, @Req() req: RequestWithUser): Promise<Task> {
+    async changeStatus(@Param('id') id: number, @Body() body: ChangeTaskStatusDto, @Req() req: RequestWithUser): Promise<Task> {
         const userId = req.user['sub'];
         const status = body.status;
         return this.tasksService.changeStatus(userId, id, status);

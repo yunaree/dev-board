@@ -5,10 +5,10 @@ import { JwtModule as NestJwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
-    ConfigModule,
+    ConfigModule.forRoot(),
     NestJwtModule.register({})
   ],
   providers: [JwtService],
   exports: [JwtService]
 })
-export class JwtModule {}
+export class JwtModule { }

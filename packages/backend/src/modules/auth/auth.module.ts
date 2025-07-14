@@ -5,12 +5,16 @@ import { UsersModule } from '../users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
 import { jwtConstants } from './constants';
-import { AuthGuard } from '../../shared/guards/auth.guard';
+import { JwtAuthGuard  } from '../../shared/guards/auth.guard';
 import { ConfigService } from '@nestjs/config';
+import { GithubStrategy } from './strategy/github.strategy';
+import { PassportModule } from '@nestjs/passport';
+import { GithubAuthGuard } from 'src/shared/guards/github/github.guard';
 
 @Module({
   imports: [
     UsersModule,
+    // PassportModule,
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
@@ -21,11 +25,13 @@ import { ConfigService } from '@nestjs/config';
     AuthService,
     {
       provide: APP_GUARD,
-      useClass: AuthGuard,
+      useClass: JwtAuthGuard,
     },
-    ConfigService
+    ConfigService,
+    GithubStrategy,
+    GithubAuthGuard,
   ],
-  controllers: [AuthController],
   exports: [AuthService],
+  controllers: [AuthController],
 })
-export class AuthModule {}
+export class AuthModule { }

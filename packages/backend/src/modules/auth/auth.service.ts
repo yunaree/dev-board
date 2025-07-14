@@ -8,6 +8,7 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
+import { Profile } from 'passport-github2';
 
 @Injectable()
 export class AuthService {
@@ -15,7 +16,7 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
     private configService: ConfigService,
-  ) {}
+  ) { }
 
   async signIn(
     username: string,
@@ -23,7 +24,7 @@ export class AuthService {
   ): Promise<{ access_token: string; refresh_token: string }> {
     const user = await this.usersService.findOne(username);
 
-    if (!user) {
+    if (!user || !user.password) {
       throw new UnauthorizedException('Користувача не знайдено');
     }
 
@@ -107,7 +108,7 @@ export class AuthService {
   }
 
   async logout(refreshToken: string): Promise<void> {
-    try{
+    try {
       const payload = await this.jwtService.verifyAsync(refreshToken, {
         secret: this.configService.get('JWT_REFRESH_SECRET'),
       });
@@ -115,8 +116,18 @@ export class AuthService {
       await this.usersService.updateUser(payload.sub, {
         refreshToken: null,
       });
-    }catch{
+    } catch {
       throw new ForbiddenException('Invalid or expired refresh token');
     }
+  }
+
+  async validateOAuthLogin(
+    profile: Profile,
+    provider: string, )
+  : Promise<{ access_token: string; refresh_token: string }> {
+    const user = await this.usersService.findOrCreate(profile, provider);
+    const tokens = await this.generateTokens(user.id, user.username);
+    await this.updateRefreshToken(user.id, tokens.refresh_token);
+    return tokens;
   }
 }
