@@ -11,7 +11,7 @@ import { IS_PUBLIC_KEY } from '../../modules/auth/public.decorator';
 import { RequestWithUser } from '../interfaces/request-with-user.type';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class JwtAuthGuard implements CanActivate {
   constructor(
     private jwtService: JwtService,
     private reflector: Reflector,

@@ -9,7 +9,7 @@ async function bootstrap() {
     .setTitle('Task Management API')
     .setDescription('Документація для DevBoard API')
     .setVersion('1.0')
-    .addBearerAuth() // Додати JWT токен
+    .addBearerAuth() 
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
