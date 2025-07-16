@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { DashboardsService } from './dashboards.service';
-import { JwtAuthGuard } from 'src/shared/guards/auth.guard';
+import { JwtAuthGuard } from 'src/shared/guards/auth/auth.guard';
 import { Dashboard } from 'src/shared/types/dashboard.type';
 import { RequestWithUser } from 'src/shared/interfaces/request-with-user.type';
 import { DashboardDto } from 'src/shared/dtos/dashboard.dto';

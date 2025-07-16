@@ -5,10 +5,10 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { jwtConstants } from '../../modules/auth/constants';
+import { jwtConstants } from '../../../modules/auth/constants';
 import { Reflector } from '@nestjs/core';
-import { IS_PUBLIC_KEY } from '../../modules/auth/public.decorator';
-import { RequestWithUser } from '../interfaces/request-with-user.type';
+import { IS_PUBLIC_KEY } from '../../../modules/auth/public.decorator';
+import { RequestWithUser } from '../../interfaces/request-with-user.type';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {

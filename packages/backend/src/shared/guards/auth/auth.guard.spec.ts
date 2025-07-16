@@ -3,18 +3,18 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { JwtService } from '@nestjs/jwt';
 import { Reflector } from '@nestjs/core';
 import { ExecutionContext, UnauthorizedException } from '@nestjs/common';
-import { IS_PUBLIC_KEY } from '../../modules/auth/public.decorator';
-import { AuthGuard } from './auth.guard';
+import { IS_PUBLIC_KEY } from '../../../modules/auth/public.decorator';
+import { JwtAuthGuard } from './auth.guard';
 
-describe('AuthGuard', () => {
-  let guard: AuthGuard;
+describe('JwtAuthGuard', () => {
+  let guard: JwtAuthGuard;
   let jwtService: JwtService;
   let reflector: Reflector;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        AuthGuard,
+        JwtAuthGuard,
         {
           provide: JwtService,
           useValue: {
@@ -30,7 +30,7 @@ describe('AuthGuard', () => {
       ],
     }).compile();
 
-    guard = module.get<AuthGuard>(AuthGuard);
+    guard = module.get<JwtAuthGuard>(JwtAuthGuard);
     jwtService = module.get<JwtService>(JwtService);
     reflector = module.get<Reflector>(Reflector);
   });

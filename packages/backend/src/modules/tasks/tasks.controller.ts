@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, Req, Use
 import { TasksService } from './tasks.service';
 import { Task } from 'src/shared/types/task.type';
 import { TaskDto } from 'src/shared/dtos/task.dto';
-import { JwtAuthGuard  } from 'src/shared/guards/auth.guard';
+import { JwtAuthGuard  } from 'src/shared/guards/auth/auth.guard';
 import { RequestWithUser } from 'src/shared/interfaces/request-with-user.type';
 import { ApiTags, ApiOperation, ApiBody, ApiResponse, ApiParam, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
 import { ChangeTaskStatusDto } from 'src/shared/dtos/change-task-status.dto';
