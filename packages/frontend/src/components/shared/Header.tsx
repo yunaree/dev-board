@@ -13,6 +13,7 @@ import { Separator } from '../ui/separator';
 import { Button } from '../ui/button';
 import { LogIn, Plus } from 'lucide-react';
 import { Input } from '../ui/input';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 function Header() {
     return (
@@ -31,13 +32,34 @@ function Header() {
                 </div>
                 
                 <div className="flex justify-end items-center space-x-4">
-                    <NavigationMenu>
+                    {/* <NavigationMenu>
                         <NavigationMenuList>
                             <NavigationMenuItem>
                                 <Button variant="outline" size="sm"><LogIn /> Log in</Button>
                             </NavigationMenuItem>
                         </NavigationMenuList>
+                    </NavigationMenu> */}
+
+                    <NavigationMenu>
+                        <NavigationMenuList>
+                            <NavigationMenuItem>
+                                <NavigationMenuTrigger>
+                                    <Avatar className="rounded-lg">
+                                            <AvatarImage
+                                            src="https://github.com/leerob.png"
+                                            alt="@evilrabbit"
+                                            />
+                                        <AvatarFallback>ER</AvatarFallback>
+                                    </Avatar>
+                                </NavigationMenuTrigger>
+                                <NavigationMenuContent>
+
+                                    // Add your navigation items here
+                                </NavigationMenuContent>
+                            </NavigationMenuItem>
+                        </NavigationMenuList>
                     </NavigationMenu>
+
                 </div>
             </div>
             <Separator></Separator>
