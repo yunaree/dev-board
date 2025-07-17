@@ -1,4 +1,9 @@
 {
+  "name": "dev-board",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "dependencies": {
     "@nestjs/passport": "^11.0.5",
     "passport": "^0.7.0",

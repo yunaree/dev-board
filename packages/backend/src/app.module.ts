@@ -8,6 +8,7 @@ import { JwtModule } from './modules/jwt/jwt.module';
 import { TasksModule } from './modules/tasks/tasks.module';
 import { DashboardsModule } from './modules/dashboards/dashboards.module';
 import { ConfigModule } from '@nestjs/config';
+import { CommentsModule } from './modules/comments/comments.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ConfigModule } from '@nestjs/config';
     JwtModule,
     TasksModule,
     DashboardsModule,
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
