@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build": "nest build",
+    "build": "npx nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -36,6 +36,7 @@
     "multer": "^2.0.2",
     "nestjs-prisma": "^0.25.0",
     "passport": "^0.7.0",
+    "passport-github2": "^0.1.12",
     "passport-google-oauth20": "^2.0.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
@@ -44,7 +45,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.18.0",
-    "@nestjs/cli": "^11.0.0",
+    "@nestjs/cli": "^11.0.7",
     "@nestjs/schematics": "^11.0.0",
     "@nestjs/testing": "^11.1.3",
     "@swc/cli": "^0.6.0",
