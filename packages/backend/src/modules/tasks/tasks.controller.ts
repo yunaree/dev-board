@@ -1,11 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { Task } from 'src/shared/types/task.type';
 import { TaskDto } from 'src/shared/dtos/task.dto';
 import { JwtAuthGuard  } from 'src/shared/guards/auth/auth.guard';
 import { RequestWithUser } from 'src/shared/interfaces/request-with-user.type';
-import { ApiTags, ApiOperation, ApiBody, ApiResponse, ApiParam, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBody, ApiResponse, ApiParam, ApiQuery, ApiBearerAuth, ApiConsumes } from '@nestjs/swagger';
 import { ChangeTaskStatusDto } from 'src/shared/dtos/change-task-status.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 
 @ApiTags('Tasks')
 @ApiBearerAuth()
@@ -62,5 +65,51 @@ export class TasksController {
         const userId = req.user['sub'];
         const status = body.status;
         return this.tasksService.changeStatus(userId, id, status);
+    }
+
+    @ApiBearerAuth()
+    @ApiOperation({ summary: 'Create a task with a file' })
+    @ApiConsumes('multipart/form-data')
+    @ApiBody({
+    description: 'Task data and file',
+    type: 'multipart/form-data',
+    schema: {
+        type: 'object',
+        properties: {
+        title: { type: 'string', example: 'Моя таска' },
+        description: { type: 'string', example: 'Опис таски', nullable: true },
+        status: { type: 'string', example: 'active' },
+        file: {
+            type: 'string',
+            format: 'binary',
+            description: 'File or photo to attach',
+        },
+        },
+        required: ['title', 'status'],
+    },
+    })
+
+    @ApiResponse({ status: 201, description: 'Task created' })
+    @ApiResponse({ status: 401, description: 'Unauthorized' })
+    @ApiResponse({ status: 400, description: 'Incorrect data' })
+    @Post('create-with-file')
+    @UseInterceptors(FileInterceptor('file', {
+    storage: diskStorage({
+        destination: './uploads/tasks/',
+        filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+        cb(null, uniqueSuffix + extname(file.originalname));
+        },
+    }),
+    }))
+    async createWithFile(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() taskDto: TaskDto,
+    @Req() req: RequestWithUser, 
+    ) {
+    const userId = req.user['sub'];
+    return this.tasksService.createTask(
+        taskDto.title, taskDto.description, taskDto.status, userId, file?.filename,
+    );
     }
 }

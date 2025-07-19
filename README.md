@@ -44,7 +44,7 @@ DevBoard is a learning project designed to practice modern backend technologies.
 - [x] Swagger documentation
 - [ ] GraphQL (Apollo) *(partial)*
 - [ ] Task filtering/search (GraphQL)
-- [ ] File attachments to tasks (upload/download)
+- [x] File attachments to tasks (upload/download)
 - [ ] Redis caching
 - [ ] Email notifications
 - [ ] Roles/permissions
