@@ -12,4 +12,7 @@ export class TaskDto{
 
     @IsInt()
     dashboardId?: number;
+
+    @IsString()
+    filePath?: string;
 }

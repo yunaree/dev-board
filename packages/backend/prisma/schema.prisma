@@ -46,6 +46,7 @@ model Task {
   updatedAt   DateTime @updatedAt
   createdBy   Int?  
   dashboardId Int?
+  filePath  String?
 
   user        User?    @relation("UserTasks", fields: [createdBy], references: [id])
   dashboard Dashboard? @relation(fields: [dashboardId], references: [id])

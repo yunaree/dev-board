@@ -9,4 +9,5 @@ export interface Task {
   createdAt: Date;
   updatedAt: Date;
   createdBy: number | null;
+  filePath?: string | null; 
 }
