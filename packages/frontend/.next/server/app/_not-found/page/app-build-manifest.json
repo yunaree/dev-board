@@ -2,8 +2,8 @@
   "pages": {
     "/_not-found/page": [
       "static/chunks/[root-of-the-server]__2c512f1e._.css",
-      "static/chunks/node_modules_62a1857c._.js",
-      "static/chunks/packages_frontend_src_660c5527._.js",
+      "static/chunks/node_modules_d18696c8._.js",
+      "static/chunks/packages_frontend_src_1b6ec03e._.js",
       "static/chunks/packages_frontend_src_app_layout_tsx_007ca514._.js",
       "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_17e42fcf._.js",
       "static/chunks/node_modules_next_dist_compiled_2ce9398a._.js",
