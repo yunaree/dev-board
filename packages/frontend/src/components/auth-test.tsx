@@ -6,7 +6,7 @@ export default function AuthTest() {
 
   return (
     <div>
-      <button onClick={() => login({ username: 'youruser', pass: 'yourpass' })}>Login</button>
+      <button onClick={() => login({ username: 'nastya', pass: 'moroz2005' })}>Login</button>
       <button onClick={() => register({ username: 'newuser', pass: 'newpass' })}>Register</button>
       <button onClick={refresh}>Refresh</button>
       <button onClick={logout}>Logout</button>

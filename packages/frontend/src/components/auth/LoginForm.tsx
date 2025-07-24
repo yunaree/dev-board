@@ -1,11 +1,24 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import { Button } from '../ui/button';
 import { LogIn } from 'lucide-react';
 import { Input } from '../ui/input';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
 import { GoogleLoginButton, GithubLoginButton  } from "react-social-login-buttons";
+import { useAuthStore } from '../../store/auth.store';
 
 function LoginForm({onSwitch}: {onSwitch: () => void}) {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const { login } = useAuthStore();
+
+      const handleSubmit = async (e: React.FormEvent) => {
+            e.preventDefault();
+            await login({ username, pass: password });
+            // Можливо, тут треба закрити діалог або показати помилку
+        };
+
     return (
         <DialogContent>
             <DialogHeader>
@@ -14,9 +27,9 @@ function LoginForm({onSwitch}: {onSwitch: () => void}) {
                     Please enter your credentials to log in.
                 </DialogDescription>
             </DialogHeader>
-            <form>
-                <Input type="text" placeholder="Username" className='mb-4' />
-                <Input type="password" placeholder="Password" className='mb-4' />
+            <form onSubmit={handleSubmit}>
+                <Input type="text" placeholder="Username" className='mb-4' value={username} onChange={e => setUsername(e.target.value)}/>
+                <Input type="password" placeholder="Password" className='mb-4' value={password} onChange={e => setPassword(e.target.value)}/>
                 <Button type="submit" className='w-full'>Log In</Button>
                 <div className="text-center text-sm text-muted-foreground mt-2">
                     Don't have an account? <a href="#" className="text-blue-500 hover:underline" onClick={e => { e.preventDefault(); onSwitch(); }}>Sign up</a>

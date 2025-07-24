@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import React from 'react';
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from '@/components/shared/AppSidebar';
+import AuthTest from '@/components/auth-test';
 
 export default function page() {
     return (
@@ -13,7 +14,9 @@ export default function page() {
         <Button className="mt-4">Click Me</Button>
 
             <div className='flex flex-col'>
+                <AuthTest />
 
+                
             </div>
     </div>
     );
