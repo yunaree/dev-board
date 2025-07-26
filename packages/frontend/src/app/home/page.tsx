@@ -7,7 +7,7 @@ import AuthTest from '@/components/auth-test';
 export default function page() {
     return (
     <div className="">
-        <div className="flex items-center justify-between">
+        {/* <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold">Home Page</h1>
         </div>
         <p className="mt-4">Welcome to the home page!</p>
@@ -17,7 +17,7 @@ export default function page() {
                 <AuthTest />
 
                 
-            </div>
+            </div> */}
     </div>
     );
 }
