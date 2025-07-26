@@ -26,7 +26,7 @@ function page() {
         className: ""
     }, void 0, false, {
         fileName: "[project]/packages/frontend/src/app/home/page.tsx",
-        lineNumber: 8,
+        lineNumber: 9,
         columnNumber: 5
     }, this);
 }
