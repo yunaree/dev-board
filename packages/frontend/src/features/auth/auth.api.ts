@@ -17,3 +17,5 @@ export const getMe = (token: string) =>
     Promise.resolve(api.get<User>('/auth/me', {
         headers: { Authorization: `Bearer ${token}` },
     }).then(({ data }) => data)); 
+
+
