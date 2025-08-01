@@ -6,20 +6,25 @@
   <component name="ChangeListManager">
     <list default="true" id="cb7f5ec7-23a9-4ad7-9411-a0a0669466e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/backend/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/prisma/schema.prisma" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/backend/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/backend/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/backend/src/modules/auth/auth.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/src/modules/auth/auth.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/backend/src/modules/auth/auth.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/src/modules/auth/auth.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/backend/src/modules/auth/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/src/modules/auth/auth.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/backend/src/modules/dashboards/dashboards.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/src/modules/dashboards/dashboards.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/backend/src/modules/jwt/jwt.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/src/modules/jwt/jwt.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/backend/src/modules/tasks/tasks.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/src/modules/tasks/tasks.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/backend/src/modules/users/users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/src/modules/users/users.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/backend/src/shared/types/user.type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/src/shared/types/user.type.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/.next/app-build-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/.next/app-build-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/.next/server/app-paths-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/.next/server/app-paths-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/.next/server/app/_not-found/page/next-font-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/.next/server/app/_not-found/page/next-font-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/.next/server/app/home/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/.next/server/app/home/page.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/.next/server/app/home/page/app-build-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/.next/server/app/home/page/app-build-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/.next/server/app/home/page/next-font-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/.next/server/app/home/page/next-font-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/.next/server/app/home/page_client-reference-manifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/.next/server/app/home/page_client-reference-manifest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/.next/server/app/page/next-font-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/.next/server/app/page/next-font-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/.next/server/chunks/ssr/_f394eb65._.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/.next/server/chunks/ssr/_f394eb65._.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/.next/server/next-font-manifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/.next/server/next-font-manifest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/.next/server/next-font-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/.next/server/next-font-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/.next/static/chunks/[root-of-the-server]__2c512f1e._.css" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/.next/static/chunks/[root-of-the-server]__2c512f1e._.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/.next/static/chunks/[root-of-the-server]__2c512f1e._.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/.next/static/chunks/[root-of-the-server]__2c512f1e._.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/.next/static/chunks/packages_frontend_src_styles_globals_css_f9ee138c._.single.css" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/.next/static/chunks/packages_frontend_src_styles_globals_css_f9ee138c._.single.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/.next/static/chunks/packages_frontend_src_styles_globals_css_f9ee138c._.single.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/.next/static/chunks/packages_frontend_src_styles_globals_css_f9ee138c._.single.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/.next/trace" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/.next/trace" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/src/app/home/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/app/home/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/src/features/auth/auth.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/features/auth/auth.api.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,21 +54,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Node.js.main.ts.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/pet/dev-board&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\pet\\dev-board\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Node.js.main.ts.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "ui",
+    "last_opened_file_path": "D:/Job/p2p-chat",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "D:\\pet\\dev-board\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -81,6 +86,7 @@
       <updated>1751187267820</updated>
       <workItem from="1751187268949" duration="684000" />
       <workItem from="1752483731156" duration="446000" />
+      <workItem from="1753709092709" duration="87000" />
     </task>
     <servers />
   </component>

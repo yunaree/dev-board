@@ -19,6 +19,14 @@ function LoginForm({onSwitch}: {onSwitch: () => void}) {
             // Можливо, тут треба закрити діалог або показати помилку
         };
 
+        const handleGoogleLogin = () => {
+        window.location.href = 'https://dev-board.onrender.com/auth/google';
+    };
+
+    const handleGithubLogin = () => {
+        window.location.href = 'https://dev-board.onrender.com/auth/github';
+    };
+
     return (
         <DialogContent>
             <DialogHeader>
@@ -35,8 +43,8 @@ function LoginForm({onSwitch}: {onSwitch: () => void}) {
                     Don't have an account? <a href="#" className="text-blue-500 hover:underline" onClick={e => { e.preventDefault(); onSwitch(); }}>Sign up</a>
                 </div>
                     <div className="space-y-3 w-full flex flex-col items-center justify-center mt-4 border-t pt-4">
-                        <GoogleLoginButton onClick={() => alert("Hello")} />
-                        <GithubLoginButton onClick={() => alert("Hello")} />
+                        <GoogleLoginButton onClick={handleGoogleLogin} />
+                        <GithubLoginButton onClick={handleGithubLogin} />
                     </div>
             </form>
         </DialogContent>
