@@ -11,15 +11,28 @@ import { useAuthStore } from '../../store/auth.store';
 function LoginForm({onSwitch}: {onSwitch: () => void}) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
     const { login } = useAuthStore();
 
-      const handleSubmit = async (e: React.FormEvent) => {
-            e.preventDefault();
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError(""); 
+        try {
             await login({ username, pass: password });
-            // Можливо, тут треба закрити діалог або показати помилку
-        };
+            // можливо закриття діалогу, якщо логін успішний
+        } catch (err: any) {
+            if (err?.response?.data?.message) {
+                setError(err.response.data.message);
+            } else {
+                setError("Invalid username or password");
+            }
 
-        const handleGoogleLogin = () => {
+            setUsername("");
+            setPassword("");
+        }
+    };
+
+    const handleGoogleLogin = () => {
         window.location.href = 'https://dev-board.onrender.com/auth/google';
     };
 
@@ -36,6 +49,7 @@ function LoginForm({onSwitch}: {onSwitch: () => void}) {
                 </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit}>
+                {error && <div className="text-red-500 text-sm mb-2">{error}</div>}
                 <Input type="text" placeholder="Username" className='mb-4' value={username} onChange={e => setUsername(e.target.value)}/>
                 <Input type="password" placeholder="Password" className='mb-4' value={password} onChange={e => setPassword(e.target.value)}/>
                 <Button type="submit" className='w-full'>Log In</Button>
