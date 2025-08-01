@@ -57,7 +57,7 @@ function Header() {
                         <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
                             <Dialog>
                                 <DialogTrigger asChild>
-                                    <Button className='ml-4 lg:ml-0' variant="secondary" size="sm" onClick={() => setDialogType('login')}>
+                                    <Button className='ml-4 lg:ml-0' variant="ghost" size="sm" onClick={() => setDialogType('login')}>
                                         <LogIn /> <div className='hidden md:inline'> Log in</div>
                                     </Button>
                                 </DialogTrigger>

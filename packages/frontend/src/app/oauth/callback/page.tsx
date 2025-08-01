@@ -1,29 +1,31 @@
+'use client';
+
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 import { getMe } from '@/features/auth/auth.api';
 import { useAuthStore } from '@/store/auth.store';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 
 export default function OAuthCallbackPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const { setTokens, setUser } = useAuthStore();
 
     useEffect(() => {
-        if (!router.isReady) return;
+        const access_token = searchParams.get('access_token');
+        const refresh_token = searchParams.get('refresh_token');
 
-        const { access_token, refresh_token } = router.query;
-
-        if (typeof access_token === 'string' && typeof refresh_token === 'string') {
+        if (access_token && refresh_token) {
             const tokens = { access_token, refresh_token };
             setTokens(tokens);
 
             getMe(access_token)
                 .then(setUser)
-                .then(() => router.replace('/home')) // або інша сторінка
+                .then(() => router.replace('/home'))
                 .catch(() => router.replace('/login'));
         } else {
             router.replace('/login');
         }
-    }, [router, setTokens, setUser]);
+    }, [router, searchParams, setTokens, setUser]);
 
     return <p>Завантаження, чекай трохи…</p>;
 }

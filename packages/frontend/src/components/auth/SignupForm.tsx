@@ -9,13 +9,24 @@ import { useAuthStore } from '@/store/auth.store';
 function SignupForm({onSwitch}: {onSwitch: () => void}) {
         const [username, setUsername] = React.useState('');
         const [password, setPassword] = React.useState('');
+        const [error, setError] = React.useState('');
     const { register } = useAuthStore();
 
     
           const handleSubmit = async (e: React.FormEvent) => {
                 e.preventDefault();
+                setError('');
+                try {
                 await register({ username, pass: password });
-                // Можливо, тут треба закрити діалог або показати помилку
+                } catch (err: any) {
+                    if (err?.response?.data?.message) {
+                        setError(err.response.data.message);
+                    } else {
+                        setError('Registration failed. Please try again.');
+                    }
+                    setUsername('');
+                    setPassword('');
+                }
             };
 
     return (
@@ -27,6 +38,7 @@ function SignupForm({onSwitch}: {onSwitch: () => void}) {
                                 </DialogDescription>
                             </DialogHeader>
                             <form  onSubmit={handleSubmit}>
+                                {error && <div className="text-red-500 text-sm mb-2">{error}</div>}
                                 <Input type="text" placeholder="Username" className='mb-4' value={username} onChange={e => setUsername(e.target.value)}/>
                                 <Input type="password" placeholder="Password" className='mb-4' value={password} onChange={e => setPassword(e.target.value)}/>
                                 <Button type="submit" className='w-full'>Sign up</Button>

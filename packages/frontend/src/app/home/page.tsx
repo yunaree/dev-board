@@ -8,7 +8,7 @@ import UserDashboardsList from '@/components/dashboards/UserDashboardsList';
 export default function page() {
     return (
     <div className="flex flex-col min-h-screen">
-        <UserDashboardsList></UserDashboardsList>
+        {/* <UserDashboardsList></UserDashboardsList> */}
     </div>
     );
 }
