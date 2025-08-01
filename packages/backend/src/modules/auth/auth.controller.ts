@@ -7,7 +7,8 @@ import {
   Post,
   Request,
   UseGuards,
-  Req
+  Req,
+  Res
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
@@ -18,6 +19,7 @@ import { AuthRefreshDto } from 'src/shared/dtos/auth-refresh.dto';
 import { GithubAuthGuard } from 'src/shared/guards/github/github.guard';
 import { JwtAuthGuard } from 'src/shared/guards/auth/auth.guard';
 import { GoogleGuard } from 'src/shared/guards/google/google.guard';
+import { Response } from 'express';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -85,9 +87,10 @@ export class AuthController {
   @Public()
   @Get('github/callback')
   @UseGuards(GithubAuthGuard)
-  async githubCallback(@Request() req) {
-    // req.user contains the tokens from the GithubStrategy.validate()
-    return req.user;
+  async githubCallback(@Request() req, @Res() res: Response) {
+    const { access_token, refresh_token } = req.user;
+    const redirectUrl = `http://localhost:3000/oauth/callback?access_token=${access_token}&refresh_token=${refresh_token}`;
+    return res.redirect(redirectUrl);
   }
 
     @Public()
@@ -100,8 +103,9 @@ export class AuthController {
   @Public()
   @Get('google/callback')
   @UseGuards(GoogleGuard)
-  async googleCallback(@Request() req) {
-    // req.user contains the tokens from the GoogleStrategy.validate()
-    return req.user;
+  async googleCallback(@Request() req, @Res() res: Response) {
+    const { access_token, refresh_token } = req.user;
+    const redirectUrl = `http://localhost:3000/oauth/callback?access_token=${access_token}&refresh_token=${refresh_token}`;
+    return res.redirect(redirectUrl);
   }
 }
