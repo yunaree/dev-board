@@ -34,24 +34,13 @@ function Header() {
 
                     {user ? (
                         <div className="flex items-center lg:p-3">
-                            <NavigationMenu>
-                            <NavigationMenuList>
-                                <NavigationMenuItem>
-                                    <NavigationMenuTrigger>
-                                        <Avatar>
+                            <a href="/profile" className="flex items-center space-x-2 h-full ml-4">
+                                  <Avatar>
                                             <AvatarFallback>
                                                 {user.username ? user.username.charAt(0).toUpperCase() : ''}
                                             </AvatarFallback>
-                                        </Avatar>
-                                    </NavigationMenuTrigger>
-                                    <NavigationMenuContent>
-                                        <Button variant="ghost" size="sm" className="mt-2" onClick={() => logout()}>
-                                            <LogOut></LogOut>Logout
-                                        </Button>
-                                    </NavigationMenuContent>
-                                </NavigationMenuItem>
-                            </NavigationMenuList>
-                        </NavigationMenu>
+                                    </Avatar>
+                            </a>
                         </div>
                     ) : (
                         <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
