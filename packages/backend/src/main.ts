@@ -18,7 +18,7 @@ async function bootstrap() {
   SwaggerModule.setup('api/docs', app, document);
 
   app.enableCors({
-    origin: 'http://localhost:3001',  // Дозволити доступ лише з цього домену
+    origin: 'http://localhost:3000',  // Дозволити доступ лише з цього домену
     credentials: true,                // Дозволити передавати cookies та інші креденшіали
   });
 

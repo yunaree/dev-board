@@ -27,6 +27,7 @@ model User {
   dashboards    Dashboard[] @relation("CreatedDashboards")
   dashboardMemberships  DashboardMember[]
   refreshToken  String?
+  avatar String?
   
   @@unique([provider, providerId])
 }
