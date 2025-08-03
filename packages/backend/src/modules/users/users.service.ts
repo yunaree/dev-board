@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService, } from 'nestjs-prisma'
 import { User } from 'src/shared/types/user.type';
 import { Profile } from 'passport';
+import * as bcrypt from 'bcrypt';
 
 // This should be a real class/interface representing a user entity
 
@@ -67,5 +68,53 @@ export class UsersService {
       where: { id: userId },
       data
     })
+  }
+
+  public async comparePasswords(userId: number, password: string): Promise<boolean> {
+    const user = await this.prismaService.user.findUnique({
+      where: { id: userId },
+      select: { password: true },
+    });
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    if (!user.password) {
+      throw new Error('Password not set for user');
+    }
+
+    return bcrypt.compare(password, user.password);
+  }
+
+  public async updateUsername(userId: number, username: string): Promise<void> {
+    const existingUser = await this.prismaService.user.findUnique({
+      where: { username },
+    });
+
+    if (existingUser) {
+      throw new Error('Username already exists');
+    }
+
+    await this.prismaService.user.update({
+      where: { id: userId },
+      data: { username },
+    });
+  }
+
+  public async updatePassword(userId: number, password: string): Promise<void> {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await this.prismaService.user.update({
+      where: { id: userId },
+      data: { password: hashedPassword },
+    });
+  }
+
+  public async updateAvatar(userId: number, avatar: string): Promise<void> {
+    // const avatarPath = `uploads/avatars/${avatar.filename}`;
+    await this.prismaService.user.update({
+      where: { id: userId },
+      data: { avatar },
+    });
   }
 }
