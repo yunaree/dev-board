@@ -10,7 +10,7 @@ The application follows a modular, service-oriented architecture. The frontend (
 Backend:
 
 ```bash
-NestJS (Express), PostgreSQL, MongoDB, Redis, Docker
+NestJS (Express), PostgreSQL, MongoDB, Redis, RabbitMQ, Docker
 ```
 
 Frontend:
@@ -26,3 +26,4 @@ Next.js, TailwindCSS, shadcn/ui, Zustand, TanStack Query, zod
 - ``dev`` for backend features
 - ``ui`` for frontend features
 - ``profile`` code with auth and user settings without anything
+
