@@ -114,7 +114,7 @@ export class UsersService {
     // const avatarPath = `uploads/avatars/${avatar.filename}`;
     await this.prismaService.user.update({
       where: { id: userId },
-      data: { avatar },
+      data: { avatar: avatar },
     });
   }
 }
