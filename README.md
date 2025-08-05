@@ -26,4 +26,6 @@ Next.js, TailwindCSS, shadcn/ui, Zustand, TanStack Query, zod
 - ``dev`` for backend features
 - ``ui`` for frontend features
 - ``profile`` code with auth and user settings without anything
+- ``feature/[:name]`` for specific features _(must be deleted after merge)_
+
 
