@@ -1,5 +1,5 @@
 export class DashboardDto {
-    title: string;
+    title!: string;
 
-    userId: number;
+    userId!: number;
 }

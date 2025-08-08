@@ -3,12 +3,12 @@ import { IsInt, IsString, MinLength } from 'class-validator';
 
 export class TaskDto{
     @IsString()
-    title: string;
+    title!: string;
 
     @IsString()
-    description: string | null;
+    description!: string | null;
 
-    status: Status;
+    status!: Status;
 
     @IsInt()
     dashboardId?: number;
