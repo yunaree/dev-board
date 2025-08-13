@@ -33,10 +33,6 @@ function Username() {
             <Separator className="lg:w-lg w-full" />
         </div>
     );
-
-    // return(
-    //     <p>username</p>
-    // )
 }
 
 export default Username;

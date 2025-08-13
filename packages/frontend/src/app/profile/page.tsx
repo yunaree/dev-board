@@ -5,8 +5,6 @@ import ChangePassword from '@/components/settings/ChangePassword';
 import Email from '@/components/settings/Email';
 import LogOut from '@/components/settings/LogOut';
 import Username from '@/components/settings/Username';
-import { useIsMounted } from '@/hooks/useIsMounted';
-import { useAuthStore } from '@/store/auth.store';
 
 import React from 'react';
 
@@ -18,7 +16,7 @@ export default function Page(){
 
             <ChangeAvatar />
 
-             <Email/>
+            <Email/>
 
             <ChangePassword />
 
