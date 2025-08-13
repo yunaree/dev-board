@@ -11,19 +11,21 @@ function ChangePassword() {
                 <p className='leading-7 [&:not(:first-child)]:mt-6'>To protect your account, we recommend that you update your password regularly. Enter your current password and create a new one.</p>
                 
                 <div className="flex justify-between md:flex-row flex-col items-start md:items-center">
+                    <div className="grid w-full max-w-sm items-center gap-3">
+                        <Label htmlFor="email">Old password</Label>
+                        <Input type="text" id="oldPassword" />
+                    </div>
+
                     <div className="flex w-full max-w-sm items-end gap-2 my-6">
                         <div className="grid w-full max-w-sm items-center gap-3">
-                            <Label htmlFor="email">Old password</Label>
-                            <Input type="text" id="oldPassword" />
+                            <Label htmlFor="email">New password</Label>
+                            <Input disabled type="text" id="oldPassword"/>
                         </div>
 
                         <Button variant="outline" className='mt-3'>Change password</Button>
                     </div>
 
-                    <div className="grid w-full max-w-sm items-center gap-3 my-6">
-                        <Label htmlFor="email">New password <p className='italic'>(Press Enter to change)</p></Label>
-                        <Input disabled type="text" id="oldPassword"/>
-                    </div>
+
                 </div>
 
                     <blockquote className="my-6 border-l-2 pl-6 italic">

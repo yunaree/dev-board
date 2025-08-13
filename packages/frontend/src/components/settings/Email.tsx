@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
-import { Separator } from '@radix-ui/react-separator';
+import { Separator } from '../ui/separator';
 
 function Email() {
     return (

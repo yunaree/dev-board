@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
 import { ModeToggle } from "@/components/shared/ModeToggle";
+import Hydrations from "@/components/shared/Hydrations";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,7 +38,8 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {/* <Header /> */}
+            <Header />
+            <Hydrations />
             <div className="flex-1 flex flex-col">
               {children}
             </div>

@@ -5,19 +5,20 @@ import ChangePassword from '@/components/settings/ChangePassword';
 import Email from '@/components/settings/Email';
 import LogOut from '@/components/settings/LogOut';
 import Username from '@/components/settings/Username';
+import { useIsMounted } from '@/hooks/useIsMounted';
+import { useAuthStore } from '@/store/auth.store';
 
 import React from 'react';
 
-function page() {
-
+export default function Page(){
     return (
         <div className="flex flex-col items-center min-h-screen max-w-4xl mx-auto lg:p-0 p-4">
-            <Username />
 
+            <Username />
 
             <ChangeAvatar />
 
-            <Email/>
+             <Email/>
 
             <ChangePassword />
 
@@ -26,5 +27,3 @@ function page() {
         </div>
     );
 }
-
-export default page;

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Separator } from '../ui/separator';
 import { Button } from '../ui/button';
 import { LogOut, LogIn, Plus } from 'lucide-react';
@@ -11,10 +11,15 @@ import LoginForm from '../auth/LoginForm';
 import SignupForm from '../auth/SignupForm';
 import { useAuthStore } from '@/store/auth.store';
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger } from '../ui/navigation-menu';
+import { useIsMounted } from '@/hooks/useIsMounted';
 
 function Header() {
-    const { user, tokens, refresh, logout } = useAuthStore();
+    
     const [dialogType, setDialogType] = useState<'login' | 'signup'>('login');
+    const isMounted = useIsMounted();
+    const { user, tokens, refresh, logout } = useAuthStore();
+    if (!isMounted) return null;
+
 
     return (
         <header>
