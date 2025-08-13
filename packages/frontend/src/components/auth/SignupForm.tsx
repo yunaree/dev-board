@@ -6,13 +6,18 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { GoogleLoginButton, GithubLoginButton  } from "react-social-login-buttons";
 import { useAuthStore } from '@/store/auth.store';
 import { Loader2 } from "lucide-react";
+import { useIsMounted } from '@/hooks/useIsMounted';
 
 function SignupForm({onSwitch}: {onSwitch: () => void}) {
         const [username, setUsername] = useState('');
         const [password, setPassword] = useState('');
         const [error, setError] = useState('');
         const [isLoading, setIsLoading] = useState(false);
+        const isMounted = useIsMounted();
     const { register } = useAuthStore();
+    if (!isMounted) {
+        return null; 
+    }
 
     
           const handleSubmit = async (e: React.FormEvent) => {

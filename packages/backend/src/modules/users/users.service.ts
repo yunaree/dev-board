@@ -3,13 +3,20 @@ import { PrismaService, } from 'nestjs-prisma'
 import { User } from 'src/shared/types/user.type';
 import { Profile } from 'passport';
 import * as bcrypt from 'bcrypt';
+import { RedisService } from 'nestjs-redis';
+import { Redis } from 'ioredis';
 
 // This should be a real class/interface representing a user entity
 
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly prismaService: PrismaService) { }
+  private redisClient: Redis;
+
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly redisService: RedisService,
+  ) { }
 
   async findOne(username: string): Promise<User | null> {
     return this.prismaService.user.findUnique({
@@ -116,5 +123,10 @@ export class UsersService {
       where: { id: userId },
       data: { avatar: avatar },
     });
+  }
+
+  async verifyCode(email: string, code: string): Promise<boolean> {
+    const savedCode = await this.redisClient.get(email);
+    return savedCode === code;
   }
 }

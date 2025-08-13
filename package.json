@@ -1,6 +1,11 @@
 {
   "name": "dev-board",
   "private": true,
+  "scripts": {
+    "f:dev": "cd packages/frontend && next dev --turbopack",
+    "f:build": "cd packages/frontend && pnpm run build",
+    "f:start": "cd packages/frontend && pnpm run start"
+  },
   "workspaces": [
     "packages/*"
   ],
