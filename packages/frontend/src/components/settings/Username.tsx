@@ -3,8 +3,6 @@
 import { useAuthStore } from '@/store/auth.store';
 import React from 'react';
 import { Separator } from '../ui/separator';
-import { Edit2 } from 'lucide-react';
-import { Button } from '../ui/button';
 import { Skeleton } from '../ui/skeleton';
 import UsernameForm from './forms/UsernameForm';
 

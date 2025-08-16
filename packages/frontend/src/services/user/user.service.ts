@@ -11,5 +11,7 @@ export const updateUsername = async (data: UpdateUsernameDto) => {
     },
   });
 
+  await useAuthStore.getState().refresh();
+
   await useAuthStore.getState().fetchMe();
 };

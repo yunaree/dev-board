@@ -6,6 +6,7 @@ import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
 import { ModeToggle } from "@/components/shared/ModeToggle";
 import Hydrations from "@/components/shared/Hydrations";
+import GlobalAlerts from "@/components/shared/GlobalAlerts";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,6 +43,7 @@ export default function RootLayout({
             <Hydrations />
             <div className="flex-1 flex flex-col">
               {children}
+              <GlobalAlerts /> 
             </div>
             <div className="fixed bottom-4 right-4 z-50">
               <ModeToggle />
