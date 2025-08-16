@@ -51,8 +51,9 @@ export class AuthController {
   @ApiResponse({ status: 200, description: 'Current user', schema: { example: { id: 1, username: 'user' } } })
   @UseGuards(JwtAuthGuard)
   @Get('me')
-  getProfile(@Request() req) {
-    return req.user;
+  async getProfile(@Request() req) {
+      const userId = req.user.sub;
+      return this.authService.getUserProfile(userId);
   }
 
   @ApiOperation({ summary: 'Refresh tokens' })

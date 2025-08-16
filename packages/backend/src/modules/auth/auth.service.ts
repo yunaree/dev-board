@@ -130,4 +130,21 @@ export class AuthService {
     await this.updateRefreshToken(user.id, tokens.refresh_token);
     return tokens;
   }
+
+  async getUserProfile(userId: number) {
+    const user = await this.usersService.findById(userId);
+    
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    return {
+      id: user.id,
+      username: user.username,
+      email: user.email? user.email : null,
+      avatar: user.avatar
+      ? `${process.env.API_URL}/uploads/avatars/${user.avatar}`
+      : null,
+    };
+  }
 }
