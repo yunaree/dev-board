@@ -13,4 +13,5 @@ export interface User {
   createdAt: Date;
   updatedAt: Date;
   refreshToken:  string | null; 
+  avatar: string | null;
 }
