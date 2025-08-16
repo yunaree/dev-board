@@ -17,16 +17,16 @@ function Header() {
     
     const [dialogType, setDialogType] = useState<'login' | 'signup'>('login');
     const isMounted = useIsMounted();
-    const { user, tokens, refresh, logout } = useAuthStore();
+    const { user } = useAuthStore();
     if (!isMounted) return null;
 
 
     return (
         <header>
             <div className="lg:flex items-center justify-between p-4">
-                <div className="p-3 flex justify-center lg:justify-start items-center space-x-4 font-[family-name:var(--font-geist-mono)] whitespace-nowrap">
+                <a href='/home' className="p-3 flex justify-center lg:justify-start items-center space-x-4 font-[family-name:var(--font-geist-mono)] whitespace-nowrap">
                     dev-board
-                </div>
+                </a>
 
                 <div className="flex items-center justify-between w-full lg:w-2/3">
                     <div className='flex items-center justify-between space-x-6 w-full lg:w-auto'>
@@ -39,7 +39,7 @@ function Header() {
 
                     {user ? (
                         <div className="flex items-center lg:p-3">
-                            <a href="/profile" className="flex items-center space-x-2 h-full ml-4">
+                            <a href="/profile/settings" className="flex items-center space-x-2 h-full ml-4">
                                   <Avatar>
                                             <AvatarFallback>
                                                 {user.username ? user.username.charAt(0).toUpperCase() : ''}

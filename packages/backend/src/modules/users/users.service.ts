@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService, } from 'nestjs-prisma'
 import { User } from 'src/shared/types/user.type';
 import { Profile } from 'passport';
@@ -11,11 +11,8 @@ import { Redis } from 'ioredis';
 
 @Injectable()
 export class UsersService {
-  private redisClient: Redis;
-
   constructor(
     private readonly prismaService: PrismaService,
-    private readonly redisService: RedisService,
   ) { }
 
   async findOne(username: string): Promise<User | null> {
@@ -100,7 +97,7 @@ export class UsersService {
     });
 
     if (existingUser) {
-      throw new Error('Username already exists');
+      throw new ConflictException('Username already exists');
     }
 
     await this.prismaService.user.update({
@@ -125,8 +122,8 @@ export class UsersService {
     });
   }
 
-  async verifyCode(email: string, code: string): Promise<boolean> {
-    const savedCode = await this.redisClient.get(email);
-    return savedCode === code;
-  }
+  // async verifyCode(email: string, code: string): Promise<boolean> {
+  //   const savedCode = await this.redisClient.get(email);
+  //   return savedCode === code;
+  // }
 }
