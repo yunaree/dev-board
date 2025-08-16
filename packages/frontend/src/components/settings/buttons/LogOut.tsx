@@ -2,7 +2,6 @@
 
 import { useAuthStore } from '@/store/auth.store';
 import React from 'react';
-import { Button } from '../ui/button';
 import { LogOut as LogOutIcon } from 'lucide-react';
 import {
   AlertDialog,
@@ -14,8 +13,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '../ui/alert-dialog';
+} from '@/components/ui/alert-dialog';
 import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
 
 function LogOut() {
   const { logout } = useAuthStore();

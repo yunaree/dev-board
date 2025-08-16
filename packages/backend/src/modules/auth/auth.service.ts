@@ -25,13 +25,13 @@ export class AuthService {
     const user = await this.usersService.findOne(username);
 
     if (!user || !user.password) {
-      throw new UnauthorizedException('Користувача не знайдено');
+      throw new UnauthorizedException('User not found');
     }
 
     const isMatch = await bcrypt.compare(pass, user.password);
 
     if (!isMatch) {
-      throw new UnauthorizedException('Невірний пароль');
+      throw new UnauthorizedException('Incorrect password');
     }
 
     const tokens = await this.generateTokens(user.id, user.username);
@@ -46,7 +46,7 @@ export class AuthService {
   ): Promise<{ access_token: string; refresh_token: string }> {
     const existingUser = await this.usersService.findOne(username);
     if (existingUser) {
-      throw new ConflictException('Користувач з таким іменем вже існує');
+      throw new ConflictException('A user with that name already exists');
     }
 
     const hash = await bcrypt.hash(pass, 10);

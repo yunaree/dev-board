@@ -2,9 +2,8 @@
 
 import React, { useState } from 'react';
 import { Button } from '../ui/button';
-import { LogIn } from 'lucide-react';
 import { Input } from '../ui/input';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
+import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog';
 import { GoogleLoginButton, GithubLoginButton  } from "react-social-login-buttons";
 import { useAuthStore } from '../../store/auth.store';
 import { Loader2 } from "lucide-react";
