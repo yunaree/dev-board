@@ -1,11 +1,13 @@
 import React from 'react';
 import { useAuthStore } from '@/store/auth.store';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Input } from '../ui/input';
 import { Separator } from '../ui/separator';
+import AvatarForm from './forms/AvatarForm';
 
 function ChangeAvatar() {
     const { user } = useAuthStore();
+
+    console.log("ChangeAvatar user:", user);
 
     return (
             <div className="lg:w-4x flex flex-col mt-5 space-x-4">
@@ -18,7 +20,7 @@ function ChangeAvatar() {
                                 {user?.username ? user.username.charAt(0).toUpperCase() : ''}
                         </AvatarFallback>
                     </Avatar>
-                    <Input id="picture" type="file" className='lg:w-auto w-3xs' />
+                    <AvatarForm/>
                 </div>
 
                 <Separator className="lg:w-lg w-full" />

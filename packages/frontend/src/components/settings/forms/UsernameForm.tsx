@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -16,30 +15,40 @@ import { Edit2, Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useAuthStore } from '@/store/auth.store';
 import { updateUsername } from '@/services/user/user.service';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { useAlertStore } from '@/store/alert.store';
 
 function UsernameForm() {
     const { user } = useAuthStore();
 
     const [username, setUsername] = useState(user?.username || '');
-    const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
         try {
             await updateUsername({ username });
-            alert('Username updated!');
+            useAlertStore.getState().showAlert(
+                "success",
+                "Success!",
+                "Your username has been updated."
+            );
+            setOpen(false);
         } catch (err: any) {
-            setError(err?.response?.data?.message || 'Failed to update username');
-            alert('Failed to update username');
+              useAlertStore.getState().showAlert(
+                    "error",
+                    "Failed!",
+                    err?.response?.data?.message || "Failed to update username"
+                );
         }finally {
             setIsLoading(false);
         }
     };
 
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button variant="secondary" size="default" className="flex items-center">
                     <Edit2 /> New username
@@ -54,13 +63,16 @@ function UsernameForm() {
                 </DialogHeader>
 
                 <form onSubmit={handleSubmit} className="grid gap-4">
-                    {error && <p className="text-red-500">{error}</p>}
                     <Input value={username} onChange={(e) => setUsername(e.target.value)} />
 
                     <DialogFooter>
-                        <DialogClose asChild>
-                            <Button variant="outline">Cancel</Button>
-                        </DialogClose>
+                        <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => setOpen(false)} 
+                        >
+                        Cancel
+                        </Button>
                         <Button type="submit" disabled={isLoading}>
                             {isLoading ? (
                                 <Loader2 className="animate-spin w-4 h-4" />
