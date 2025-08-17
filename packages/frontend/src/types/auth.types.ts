@@ -1,7 +1,8 @@
 export type User = {
     id: number;
     username: string;
-    avatar?: string;
+    email: string | null;
+    avatar: string | null;
 };
 
 export type AuthTokens = {

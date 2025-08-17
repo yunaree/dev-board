@@ -29,5 +29,7 @@ export const updateAvatar = async (file: File) => {
     },
   });
 
-  return res.data;
+  await useAuthStore.getState().refresh();
+
+  await useAuthStore.getState().fetchMe();
 };

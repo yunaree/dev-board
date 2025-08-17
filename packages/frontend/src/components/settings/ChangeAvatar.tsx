@@ -17,7 +17,11 @@ function ChangeAvatar() {
                 <div className="flex items-center w-full lg:space-x-4 mb-4">
                     <Avatar className="w-12 h-12 m-5">
                         <AvatarFallback>
-                                {user?.username ? user.username.charAt(0).toUpperCase() : ''}
+                                {user?.avatar ? (
+                                <img src={user.avatar} alt="avatar" />
+                                ) : (
+                                <span>{user?.username?.charAt(0).toUpperCase()}</span>
+                                )}
                         </AvatarFallback>
                     </Avatar>
                     <AvatarForm/>
