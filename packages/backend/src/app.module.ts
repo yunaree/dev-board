@@ -9,6 +9,8 @@ import { TasksModule } from './modules/tasks/tasks.module';
 import { DashboardsModule } from './modules/dashboards/dashboards.module';
 import { ConfigModule } from '@nestjs/config';
 import { CommentsModule } from './modules/comments/comments.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -22,6 +24,10 @@ import { CommentsModule } from './modules/comments/comments.module';
     TasksModule,
     DashboardsModule,
     CommentsModule,
+      ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads'),
+      serveRoot: '/uploads',
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
