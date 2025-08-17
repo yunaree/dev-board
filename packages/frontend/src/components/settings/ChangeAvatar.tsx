@@ -12,7 +12,7 @@ function ChangeAvatar() {
     return (
             <div className="lg:w-4x flex flex-col mt-5 space-x-4">
                 <p className='scroll-m-20 text-2xl font-semibold tracking-tight'>Change Avatar</p>
-                <p className='leading-7 [&:not(:first-child)]:mt-6'>Upload a new image to update your profile. We recommend using a square photo that is at least 400×400 pixels in size. Supported formats: JPG, PNG.</p>
+                <p className='leading-7 [&:not(:first-child)]:mt-6'>Upload a new image to update your profile. We recommend using a square photo that is at least 400×400 pixels in size. Supported formats: PNG.</p>
 
                 <div className="flex items-center w-full lg:space-x-4 mb-4">
                     <Avatar className="w-12 h-12 m-5">
