@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
-import { getMe } from '@/services/auth/auth.api';
+import { getMe } from '@/services/auth/auth.service';
 import { useAuthStore } from '@/store/auth.store';
 
 export default function OAuthCallbackPage() {

@@ -7,8 +7,6 @@ import AvatarForm from './forms/AvatarForm';
 function ChangeAvatar() {
     const { user } = useAuthStore();
 
-    console.log("ChangeAvatar user:", user);
-
     return (
             <div className="lg:w-4x flex flex-col mt-5 space-x-4">
                 <p className='scroll-m-20 text-2xl font-semibold tracking-tight'>Change Avatar</p>
