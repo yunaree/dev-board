@@ -42,7 +42,11 @@ function Header() {
                             <a href="/profile/settings" className="flex items-center space-x-2 h-full ml-4">
                                   <Avatar>
                                             <AvatarFallback>
-                                                {user.username ? user.username.charAt(0).toUpperCase() : ''}
+                                                {user?.avatar ? (
+                                                <img src={user.avatar} alt="avatar" />
+                                                ) : (
+                                                <span>{user?.username?.charAt(0).toUpperCase()}</span>
+                                                )}
                                             </AvatarFallback>
                                     </Avatar>
                             </a>

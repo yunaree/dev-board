@@ -1,6 +1,7 @@
 export type User = {
     id: number;
     username: string;
+    provider: string; // e.g., 'local', 'github', 'google'
     email: string | null;
     avatar: string | null;
 };

@@ -1,4 +1,4 @@
-import { refresh } from '@/services/auth/auth.api';
+import { refresh } from '@/services/auth/auth.service';
 import { useAuthStore } from '@/store/auth.store';
 import axios from 'axios';
 

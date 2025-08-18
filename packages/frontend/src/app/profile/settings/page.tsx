@@ -1,8 +1,8 @@
 "use client"
 
 import LogOut from '@/components/settings/buttons/LogOut';
-import ChangeAvatar from '@/components/settings/ChangeAvatar';
-import ChangePassword from '@/components/settings/ChangePassword';
+import ChangeAvatar from '@/components/settings/Pfp';
+import ChangePassword from '@/components/settings/Password';
 import Email from '@/components/settings/Email';
 import Username from '@/components/settings/Username';
 

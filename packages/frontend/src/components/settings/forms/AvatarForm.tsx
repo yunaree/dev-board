@@ -46,7 +46,7 @@ function AvatarForm() {
 
     return (
         <div className="flex gap-2">
-            <Input type="file" className='lg:w-auto w-3xs' accept="image/*" onChange={handleFileChange} />
+            <Input type="file" className='lg:w-auto w-3xs' accept="image/png" onChange={handleFileChange} />
             <Button className="w-full lg:w-auto" variant="outline" onClick={handleUpload} disabled={!selectedFile || isLoading}>
                 {isLoading ? <Loader2 className="animate-spin" /> : <Upload />}
                 Upload
