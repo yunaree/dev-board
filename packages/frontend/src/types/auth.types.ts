@@ -1,7 +1,7 @@
 export type User = {
     id: number;
     username: string;
-    provider: string; // e.g., 'local', 'github', 'google'
+    isPasswordExist: boolean;
     email: string | null;
     avatar: string | null;
 };
