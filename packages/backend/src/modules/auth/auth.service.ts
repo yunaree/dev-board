@@ -141,7 +141,7 @@ export class AuthService {
     return {
       id: user.id,
       username: user.username,
-      provider: user.provider,
+      isPasswordExist: !!user.password,
       email: user.email? user.email : null,
       avatar: user.avatar
       ? `${process.env.API_URL}/uploads/avatars/${user.avatar}`

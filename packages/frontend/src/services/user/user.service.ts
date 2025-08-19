@@ -1,5 +1,5 @@
 import { api } from "@/lib/api";
-import { UpdateUsernameDto } from "./dtos/UpdateUsername.dto";
+import { UpdateUsernameDto } from "./dtos/username.dto";
 import { useAuthStore } from "@/store/auth.store";
 
 export const syncUser = async () => {
