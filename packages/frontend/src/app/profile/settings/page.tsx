@@ -16,7 +16,8 @@ export default function Page(){
 
             <ChangeAvatar />
 
-            <Email/>
+            {/* will be a feature */}
+            {/* <Email/> */}
 
             <ChangePassword />
 
