@@ -18,7 +18,7 @@ import { EllipsisVertical } from 'lucide-react';
 
 function DashboardCard() {
     return (
-        <div className="flex justify-between gap-4 w-90 p-4 border rounded-md">
+        <div className="flex justify-between gap-4 lg:w-90 md:w-sm p-4 border rounded-md">
           <img src={"https://github.com/vercel.png"} className='w-10 h-10 rounded-md pt-1'></img>
           <div className="space-y-1 pt-1">
             <h4 className="text-sm font-semibold">@nextjs</h4>
@@ -51,7 +51,7 @@ function DashboardCard() {
                     </DropdownMenuItem>
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Leave</DropdownMenuItem>
+                    <DropdownMenuItem variant='destructive'>Leave</DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
         </div>

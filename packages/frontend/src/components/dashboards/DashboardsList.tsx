@@ -74,7 +74,7 @@ function DashboardsList() {
                 </Popover>
             </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-1">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-4 lg:gap-1">
         <DashboardCard />
         <DashboardCard />
         </div>
