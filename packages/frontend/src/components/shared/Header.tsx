@@ -10,8 +10,9 @@ import { Dialog, DialogTrigger } from '../ui/dialog';
 import LoginForm from '../auth/LoginForm';
 import SignupForm from '../auth/SignupForm';
 import { useAuthStore } from '@/store/auth.store';
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger } from '../ui/navigation-menu';
 import { useIsMounted } from '@/hooks/useIsMounted';
+import CreateDashboardForm from '../dashboards/forms/CreateDashboardForm';
+import SearchSuggestions from '../dashboards/SearchSuggestions';
 
 function Header() {
     
@@ -30,11 +31,17 @@ function Header() {
 
                 <div className="flex items-center justify-between w-full lg:w-2/3">
                     <div className='flex items-center justify-between space-x-6 w-full lg:w-auto'>
-                        <Input type="text" placeholder="Search" className='w-full lg:w-150' />
-                        <Button type="submit">
-                            <Plus />
-                            <div className='hidden md:inline'>Create</div>
-                        </Button>
+                        {/* <Input type="text" placeholder="Search" className='w-full lg:w-150' /> */}
+                        <SearchSuggestions/>
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Button type="submit">
+                                    <Plus />
+                                    <div className='hidden md:inline'>Create</div>
+                                </Button>
+                            </DialogTrigger>
+                            <CreateDashboardForm/>
+                        </Dialog>
                     </div>
 
                     {user ? (

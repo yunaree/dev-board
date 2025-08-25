@@ -1,64 +1,59 @@
 import React from 'react';
 import {
-  Card,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
-import Link from 'next/link';
-import { Plus, UserCog2 } from 'lucide-react';
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Button } from '../ui/button';
+import { EllipsisVertical } from 'lucide-react';
 
 function DashboardCard() {
     return (
-        <div>
-            <Card className="w-full lg:w-sm w-2xs">
-                <CardHeader>
-                    <div  className="flex w-full items-center justify-between">
-                        <CardTitle>Dashboard Title</CardTitle>
-                        <Link href="#" className="text-blue-500 hover:underline">
-                        Go to Dashboard
-                        </Link>
-                    </div>
-
-                        <div className="flex items-center text-sm text-gray-500">
-                            <div className="text-blue-500 mr-2 text-[14px]">•</div>
-                            9+ notification
-                        </div>
-                </CardHeader>
-
-                <div className="flex justify-between items-center px-6">
-                        <div className="flex -space-x-2 *:data-[slot=avatar]:grayscale ">
-                        <Avatar>
-                        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                        <AvatarFallback>CN</AvatarFallback>
-                        </Avatar>
-                        <Avatar>
-                        <AvatarImage src="https://github.com/leerob.png" alt="@leerob" />
-                        <AvatarFallback>LR</AvatarFallback>
-                        </Avatar>
-                        <Avatar>
-                        <AvatarImage
-                            src="https://github.com/evilrabbit.png"
-                            alt="@evilrabbit"
-                        />
-                        <AvatarFallback>ER</AvatarFallback>
-                        </Avatar>
-                        <Avatar>
-                        <AvatarFallback><Plus></Plus></AvatarFallback>
-                        </Avatar>
-
-                        </div>
-
-                        <div className="flex items-center gap-3">
-                            <UserCog2 className="h-5 w-5 text-gray-500" />
-                            <span className="text-sm text-gray-500">Creator</span>
-                        </div>
-                </div>
-            </Card>
+        <div className="flex justify-between gap-4 lg:w-90 md:w-sm p-4 border rounded-md">
+          <img src={"https://github.com/vercel.png"} className='w-10 h-10 rounded-md pt-1'></img>
+          <div className="space-y-1 pt-1">
+            <h4 className="text-sm font-semibold">@nextjs</h4>
+            <p className="text-sm">
+              The React Framework – created and maintained by @vercel.
+            </p>
+            <div className="text-muted-foreground text-xs">
+              Joined December 2021
+            </div>
+          </div>
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="ghost"><EllipsisVertical/></Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="start">
+                    <DropdownMenuGroup>
+                    <DropdownMenuSub>
+                        <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
+                        <DropdownMenuPortal>
+                        <DropdownMenuSubContent>
+                            <DropdownMenuItem>Username</DropdownMenuItem>
+                            <DropdownMenuItem>Email</DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>More...</DropdownMenuItem>
+                        </DropdownMenuSubContent>
+                        </DropdownMenuPortal>
+                    </DropdownMenuSub>
+                    <DropdownMenuItem>
+                        New Team
+                    </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem variant='destructive'>Leave</DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
         </div>
     );
 }
