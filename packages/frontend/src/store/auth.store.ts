@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { AuthTokens, User } from '../types/auth.types';
+import { AuthTokens, User } from '../types/auth.type';
 import { login as loginApi, register as registerApi, refresh as refreshApi, getMe } from '../services/auth/auth.service';
 import { persist } from 'zustand/middleware';
 

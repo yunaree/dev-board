@@ -1,5 +1,5 @@
 import { api } from '../../lib/api';
-import { AuthCredentials, AuthResponse, RefreshRequest, User } from '../../types/auth.types';
+import { AuthCredentials, AuthResponse, RefreshRequest, User } from '../../types/auth.type';
 
 export const login = (data: AuthCredentials) =>
     Promise.resolve(api.post<AuthResponse>('/auth/login', data).then((res) => res.data));

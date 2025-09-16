@@ -1,7 +1,7 @@
 export const roles = [
     {
         value: "all",
-        label: "All"
+        label: "All roles"
     },
     {
         value: "membership",
