@@ -21,7 +21,7 @@ import DashboardCard from './DashboardCard';
 function DashboardsList() {
     const [open, setOpen] = React.useState(false)
     const [value, setValue] = React.useState("")
-    const [dashboardsLength, setDashboardsLength] = React.useState(0);
+    const [dashboardsLength, setDashboardsLength] = React.useState(4);
 
     return (
         <div className='w-full flex flex-col py-10 gap-y-10'>
@@ -75,13 +75,14 @@ function DashboardsList() {
                 </Popover>
             </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-4 lg:gap-1">
-        <DashboardCard />
-        <DashboardCard />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-4 lg:gap-1">
+            <DashboardCard />
+            <DashboardCard />
+            <DashboardCard />
 
-        {dashboardsLength > 4 && (
-            <Button className='w-2xs my-5' variant="secondary">Load more...</Button>
-        )}
+            {dashboardsLength > 3 && (
+                <Button className='w-2xs my-5' variant="secondary">Load more...</Button>
+            )}
         </div>
 
         </div>

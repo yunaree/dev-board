@@ -7,6 +7,8 @@ import Footer from "@/components/shared/Footer";
 import { ModeToggle } from "@/components/shared/ModeToggle";
 import Hydrations from "@/components/shared/Hydrations";
 import GlobalAlerts from "@/components/shared/GlobalAlerts";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/shared/AppSidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,10 +41,13 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            
             <Header />
             <Hydrations />
             <div className="flex-1 flex flex-col">
-              {children}
+              <SidebarProvider>
+                {children}
+              </SidebarProvider>
               <GlobalAlerts /> 
             </div>
             <div className="fixed bottom-4 right-4 z-50">

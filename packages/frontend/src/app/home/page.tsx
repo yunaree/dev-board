@@ -14,10 +14,9 @@ export default function page() {
     const { user, tokens } = useAuthStore();
 
     return (
-    <div className="flex flex-col min-h-screen px-4 md:px-20 lg:px-40">
+    <div className="flex min-h-screen px-4 md:px-20 lg:px-40">
+        <AppSidebar />
         <DashboardsList/>
-
-        {/* <TasksUpdates /> */}
     </div>
     );
 }
