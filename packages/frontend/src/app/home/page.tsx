@@ -8,12 +8,14 @@ import { useAuthStore } from '@/store/auth.store';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import CreateDashboardForm from '@/components/dashboards/forms/CreateDashboardForm';
 import DashboardsList from '@/components/dashboards/DashboardsList';
+import TasksUpdates from '@/components/updates/TasksUpdates';
 
 export default function page() {
     const { user, tokens } = useAuthStore();
 
     return (
-    <div className="flex flex-col min-h-screen px-4 md:px-20 lg:px-40">
+    <div className="flex min-h-screen px-4 md:px-20 lg:px-40">
+        <AppSidebar />
         <DashboardsList/>
     </div>
     );
