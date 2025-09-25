@@ -32,12 +32,20 @@ export class DashboardsController {
     @UseGuards(JwtAuthGuard)
     @Post()
     async createDashboard(
-        @Req() req: RequestWithUser,
-        @Body() dashboardDto: DashboardDto
+    @Req() req: RequestWithUser,
+    @Body() dashboardDto: DashboardDto,
     ): Promise<Dashboard> {
         const userId = req.user['sub'];
-        return this.dashboardsService.createDashboard(dashboardDto.title, userId);
+
+        return this.dashboardsService.createDashboard(
+            dashboardDto.title,
+            userId,
+            dashboardDto.type,
+            dashboardDto.iconId,
+            dashboardDto.description,
+        );
     }
+
 
     @ApiOperation({ summary: 'Delete dashboard by id' })
     @ApiParam({ name: 'id', type: Number })

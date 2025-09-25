@@ -38,6 +38,11 @@ enum Status {
   inactive
 }
 
+enum DashboardType {
+  PUBLIC
+  PRIVATE
+}
+
 model Task {
   id          Int      @id @default(autoincrement())
   title       String   @db.VarChar(500)
@@ -55,13 +60,16 @@ model Task {
 }
 
 model Dashboard {
-  id       Int     @id @default(autoincrement())
-  title    String  @db.VarChar(255)
-  userId   Int
+  id          Int                @id @default(autoincrement())
+  title       String             @db.VarChar(255) @unique
+  type        DashboardType      @default(PRIVATE)
+  iconId      Int                @default(1)
+  description String?            @db.VarChar(500)
+  userId      Int
 
-  creator  User    @relation("CreatedDashboards", fields: [userId], references: [id])
-  tasks    Task[]
-  members  DashboardMember[]
+  creator     User               @relation("CreatedDashboards", fields: [userId], references: [id])
+  tasks       Task[]
+  members     DashboardMember[]
 }
 
 model DashboardMember {
