@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import {
@@ -22,21 +22,82 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { ChevronLeft, ChevronRight, LockOpen } from "lucide-react"
+import { ChevronLeft, ChevronRight, Loader2, LockOpen } from "lucide-react"
 import { Textarea } from "@/components/ui/textarea"
 import { icons } from "@/temporary/icons"
 import Image from "next/image"
+import { DashboardType } from "@/services/dashboard/enums/type.enum"
+import { createDashboard } from "@/services/dashboard/dashboard.service"
+import { useAlertStore } from "@/store/alert.store"
+import { validateTitle } from "@/helpers/validateTitle"
 
 function CreateDashboardForm() {
   const router = useRouter()
   const [step, setStep] = useState(1)
-  const [selectedIcon, setSelectedIcon] = useState<string | null>(null)
+  const [selectedIcon, setSelectedIcon] = useState<number | null>(null)
+  const [title, setTitle] = useState("")
+  const [type, setType] = useState(DashboardType.PUBLIC)
+  const [description, setDescription] = useState("")
+  const [isStepTwoAvailable, setIsStepTwoAvailable] = useState(false)
+  const [isCreateAvailable, setIsCreateAvailable] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  useEffect(()=>{
+    if(title && type){
+      setIsStepTwoAvailable(true)
+    }else{
+      setIsStepTwoAvailable(false)
+    }
+  }, [title, type])
+
+
+  useEffect(()=>{
+    if(description && selectedIcon){
+      setIsCreateAvailable(true)
+    }else{
+      setIsCreateAvailable(false)
+    }
+  }, [description, selectedIcon])
 
   const handleNext = () => {
-    // 👉 тут можна зібрати дані з інпутів, відправити на бекенд
-    // і тільки потім перейти
-    // router.push("/dashboard/details") 
-    setStep(2)
+    const isTitleValid = validateTitle(title);
+    if(isTitleValid){
+      useAlertStore.getState().showAlert("error", "Error!", isTitleValid);
+      setTitle("")
+    }else{
+    setStep(2)}
+  }
+
+  const handleCreate = async (e: React.FormEvent) => {
+    setLoading(true)
+    const validTitle = title.toLowerCase()
+    try{
+      await createDashboard({
+        title: validTitle,
+        type,
+        description,
+        iconId: selectedIcon!
+      })
+      router.refresh()
+      router.push(`/dashboard/${validTitle}`)
+    }catch(err: any){
+      if (err?.response?.data?.message === "Dashboard with this title already exists") {
+        useAlertStore.getState().showAlert(
+          "error",
+          "Error!",
+          err.response.data.message
+        );
+      } else {
+        useAlertStore.getState().showAlert(
+          "error",
+          "Error!",
+          err.response.data.message
+        );
+        console.error("Unexpected error:", err);
+      }
+    }finally{
+      setLoading(false)
+    }
   }
 
   return (
@@ -55,22 +116,22 @@ function CreateDashboardForm() {
           <Label htmlFor="title">
             Title <i>(one unique letter)</i>
           </Label>
-          <Input id="title" type="text" placeholder="@title of your board..." required />
+          <Input id="title" type="text" placeholder="@title of your board..." value={title} onChange={(e)=>setTitle(e.target.value)} required />
         </div>
 
         <div className="grid gap-3">
           <div className="flex items-center">
             <Label htmlFor="type">Type</Label>
           </div>
-          <Select defaultValue="public">
+          <Select defaultValue={DashboardType.PUBLIC}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Select..." />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Types</SelectLabel>
-                <SelectItem value="public">Public</SelectItem>
-                <SelectItem value="private">Private</SelectItem>
+                <SelectItem value={DashboardType.PUBLIC} onChange={()=>setType(DashboardType.PUBLIC)}>Public</SelectItem>
+                <SelectItem value={DashboardType.PRIVATE} onChange={()=>setType(DashboardType.PRIVATE)}>Private</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
@@ -81,7 +142,7 @@ function CreateDashboardForm() {
         <DialogClose asChild>
           <Button variant="outline">Cancel</Button>
         </DialogClose>
-        <Button onClick={handleNext}>Next <ChevronRight/></Button>
+        <Button onClick={handleNext} disabled={!isStepTwoAvailable}>Next <ChevronRight/></Button>
       </DialogFooter>
       </>)}
 
@@ -123,13 +184,13 @@ function CreateDashboardForm() {
               <div className="flex items-center">
                 <Label htmlFor="description">Descriptoin</Label>
               </div>
-              <Textarea id="description" placeholder="@description of your board..." required />
+              <Textarea id="description" placeholder="@description of your board..." value={description} onChange={(e)=>setDescription(e.target.value)} required />
               </div>
           </div>
 
           <DialogFooter>
             <Button variant="outline" onClick={()=>setStep(1)}><ChevronLeft/> Previous</Button>
-            <Button onClick={handleNext}>Create</Button>
+            <Button onClick={handleCreate} disabled={!isCreateAvailable || loading}>{loading && <Loader2 className="animate-spin w-4 h-4 mr-2" />}Create</Button>
           </DialogFooter>
         </>
       )}
