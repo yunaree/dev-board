@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { DashboardType } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
 import { Dashboard } from 'src/shared/types/dashboard.type';
 
@@ -16,12 +17,29 @@ export class DashboardsService {
         return dashboards ?? [];
     }
 
-    async createDashboard(title: string, userId: number): Promise<Dashboard> {
+    async createDashboard(
+        title: string,
+        userId: number,
+        type: DashboardType,
+        iconId: number,
+        description?: string,
+    ): Promise<Dashboard> {
+        const existing = await this.prismaService.dashboard.findUnique({
+        where: { title },
+        });
+
+        if (existing) {
+        throw new BadRequestException("Dashboard with this title already exists");
+        }
+
         return this.prismaService.dashboard.create({
-            data: {
-                title,
-                userId,
-            },
+        data: {
+            title,
+            userId,
+            type,
+            iconId,
+            description,
+        },
         });
     }
 
